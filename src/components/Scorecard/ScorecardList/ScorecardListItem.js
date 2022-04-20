@@ -22,3 +22,4 @@ const ScorecardListItem = ({scorecard}) => {
         </li>
     )
 }
+export default ScorecardListItem;
