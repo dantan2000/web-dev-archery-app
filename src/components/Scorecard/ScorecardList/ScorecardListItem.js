@@ -4,9 +4,8 @@ import {useDispatch} from "react-redux";
 const ScorecardListItem = ({scorecard}) => {
     const dispatch = useDispatch();
 
-    //again, mostly guessing on stuff here
-    //i think we need to get the archer by going through the userid?
-    //also do we want to show score?
+    //const comp = api.get(scorecard.comp_id);
+
     return(
         <li className="list-group-item">
             <div className="row">
@@ -14,7 +13,7 @@ const ScorecardListItem = ({scorecard}) => {
                     <b>{scorecard.archer}</b>
                 </div>
                 <div className="col">
-                    {scorecard.type}
+                    {scorecard.comp}
                 </div>
                 <div className="col">
                     {scorecard.date}

@@ -2,7 +2,7 @@ import * as services from '../services/scorecard-services';
 
 export const CREATE_SCORECARD = 'CREATE_SCORECARD';
 export const FIND_ALL_SCORECARDS = 'FIND_ALL_SCORECARS';
-export const FIND_SC_BY_USER_ID = 'FIND_SC_BY_USER_ID'; //do we need this?
+export const FIND_SC_BY_USERNAME = 'FIND_SC_BY_USERNAME'; //do we need this?
 export const UPDATE_SCORECARD = 'UPDATE_SCORECARD';
 export const DELETE_SCORECARD = 'DELETE_SCORECARD';
 
@@ -23,7 +23,7 @@ export const findAllScorecards = async(dispatch) => {
 }
 
 //uhhhhh?
-export const findScorecardsByUserID = () => {}
+export const findScorecardsByUsername = () => {}
 
 export const updateScorecard = async (dispatch, scorecard) => {
     const status = await services.updateScorecard(scorecard);
