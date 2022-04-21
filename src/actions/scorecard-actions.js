@@ -1,8 +1,7 @@
 import * as services from '../services/scorecard-services';
 
 export const CREATE_SCORECARD = 'CREATE_SCORECARD';
-export const FIND_ALL_SCORECARDS = 'FIND_ALL_SCORECARS';
-export const FIND_SC_BY_USERNAME = 'FIND_SC_BY_USERNAME'; //do we need this?
+export const FIND_SCORECARDS = 'FIND_SCORECARDS';
 export const UPDATE_SCORECARD = 'UPDATE_SCORECARD';
 export const DELETE_SCORECARD = 'DELETE_SCORECARD';
 
@@ -15,15 +14,20 @@ export const createScorecard = async(dispatch, scorecard) => {
 }
 
 export const findAllScorecards = async(dispatch) => {
-    const scorecards = await servvice.findAllScorecards();
+    const scorecards = await service.findAllScorecards();
     dispatch({
         type: FIND_ALL_SCORECARDS,
         scorecards
     });
 }
 
-//uhhhhh?
-export const findScorecardsByUsername = () => {}
+export const findScorecardsByUsername = (dispatch, username) => {
+    const scorecards = await service.findScorecardsByUsername(username);
+    dispatch({
+        type: FIND_SCORECARDS,
+        scorecards
+    });
+}
 
 export const updateScorecard = async (dispatch, scorecard) => {
     const status = await services.updateScorecard(scorecard);
