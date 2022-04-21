@@ -6,26 +6,29 @@ const USERS_API = `${API_BASE}/users`;
 // If successful, automatically sets browser cookies
 export const createUser = async(newUser) => {
   try {
-    const response = await axios.post(USERS_API, newUser)
+    const response = await axios.post(USERS_API, newUser);
     return true;
   } catch (err) {
-    return false
+    return false;
   }
 }
 
-
-export const findAllScorecards = async() => {
+// Finds all users in the database
+export const findAllUsers = async() => {
   const response = await axios.get(USERS_API);
-  const scorecards = response.data;
-  return scorecards;
+  const users = response.data;
+  return users;
 }
 
+// Given a username, finds the user in the database with that username
 export const findUserByUsername = async(username) => {
   const response = await axios.get(`${API_BASE}/user/${username}`);
   const user = response.data;
   return user;
 }
 
+// Finds the user based on the browser's cookies
+// Returns undefined if no user was found
 export const findUserByCookie = async() => {
   try {
     const response = await axios.get(`${API_BASE}/user_by_cookie`);
@@ -36,12 +39,16 @@ export const findUserByCookie = async() => {
   }
 }
 
+// Deletes a user from the database
+// Takes in a full User type
 export const deleteUser = async(user) => {
   const response = await axios
     .delete(`${USERS_API}/${user._id}`);
   return response.data;
 }
 
+// Updates a user in the database
+// Takes in a full User type
 export const updateUser = async(user) => {
   const response = await axios
     .put(`${USERS_API}/${user._id}`, user);
@@ -53,7 +60,7 @@ export const updateUser = async(user) => {
 // If successful, will automatically set browser cookies
 export const loginUser = async(username, password) => {
   try {
-    const response = await axios.put(`${API_BASE}/user_login`);
+    const response = await axios.put(`${API_BASE}/user_login`, {username: username, password: password});
     return true;
   } catch (err) {
     return false;
