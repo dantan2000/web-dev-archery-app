@@ -33,19 +33,21 @@ const EventListItem = ({
     const dispatch = useDispatch();
 
     return (
-        <li className="list-group-item">
-            <div className="row">
-                <div className="col">
-                    <b>{event.Name}</b>
+        <Link to={`/events/${event.ID}`}>
+            <li className="list-group-item">
+                <div className="row">
+                    <div className="col">
+                        <b>{event.Name}</b>
+                    </div>
+                    <div className="col">
+                        {event.Place}, {event.CountryName}
+                    </div>
+                    <div className="col">
+                        {event.DFrom} - {event.DTo}
+                    </div>
                 </div>
-                <div className="col">
-                    {event.Place}, {event.CountryName}
-                </div>
-                <div className="col">
-                    {event.DFrom} - {event.DTo}
-                </div>
-            </div>
-        </li>
+            </li>
+        </Link>
     );
 }
 export default EventListItem;
