@@ -56,5 +56,5 @@ const EventDetails = async () => {
     </>
 
   )
-
 }
+export default EventDetails;
