@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { findEventByID } from '../../../services/world-archery-services';
 
-const EventDetails = async () => {
+const EventDetails = () => {
 
   const { eid } = useParams();
 
