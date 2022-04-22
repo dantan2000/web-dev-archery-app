@@ -1,0 +1,11 @@
+.wd-event-details-panel{
+    border-style: solid;
+    border-radius: 10px;
+}
+.wd-flag{
+    text-align: center;
+}
+.wd-details{
+    text-align: center;
+    line-height: 50px; 
+}
