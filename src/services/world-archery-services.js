@@ -1,5 +1,6 @@
 import axios from 'axios';
-const WORLD_ARCHERY_API = 'http://api.worldarchery.org/v3/COMPETITIONS/?';
+const API_BASE = process.env.REACT_APP_API_BASE;
+const WORLD_ARCHERY_API = `${API_BASE}/events/?`;
 const stdQuery = '&SortBy=-DATE&RBP=100&Page=0';
 
 // Given a query string, contact the World Archery API and make a request with that query string
@@ -15,4 +16,12 @@ export const findEvents = async(queryString) => {
 export const findEventsByParams = async(params) => {
   const response = await axios.get(WORLD_ARCHERY_API.concat(new URLSearchParams(params).toString));
   return response.data.items
+}
+
+export const findEventByID = async(eid) => {
+  const response = await axios.get(WORLD_ARCHERY_API.concat(`CompId=${eid}`));
+  if (response.data.pageInfo.totalResults < 1) {
+    throw new Error("Error: No competition found");
+  }
+  return response.data.items[0];
 }
