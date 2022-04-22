@@ -56,14 +56,19 @@ export const updateUser = async(user) => {
 }
 
 
-// Attempts to log in user, returns whether or not login was successful
+// Attempts to log in user, the user if successful, throws an error if not
 // If successful, will automatically set browser cookies
 export const loginUser = async(username, password) => {
-  try {
-    const response = await axios.put(`${API_BASE}/user_login`, {username: username, password: password});
-    return true;
-  } catch (err) {
-    return false;
-  }
+  const response = await axios.put(`${API_BASE}/user_login`, {username: username, password: password});
+  return response.data;
+}
 
+// Finds all users that have favorited a given competition ID
+export const findUsersByFavCompID = async(compID) => {
+  try {
+    const response = await axios.put(`${API_BASE}/users_by_fav_comp_id/${compID}`);
+    return response.data;
+  } catch (err) {
+    return [];
+  }
 }
