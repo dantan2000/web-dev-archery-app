@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { findEventByID } from '../../../services/world-archery-services';
+import divisions from '../../../mapping/divisions'
 
 const EventDetails = () => {
   const [error, setError] = useState(false)
