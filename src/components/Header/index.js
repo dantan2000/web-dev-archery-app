@@ -16,13 +16,13 @@ const Header = () => {
                     </span>
                     <ul className="navbar-nav">
                         <li class="nav-item">
-                            <Link class="nav-link" to="/">Home</Link>
+                            <Link className="nav-link" to="/">Home</Link>
                         </li>
                         <li class="nav-item">
-                            <Link class="nav-link" to="/search"><i className="fas fa-search"></i> Events</Link>
+                            <Link className="nav-link" to="/search"><i className="fas fa-search"></i> Events</Link>
                         </li>
                         <li class="nav-item">
-                            <ProfileElement class="nav-link"/>
+                            <ProfileElement className="nav-link"/>
                         </li>
 
                     </ul>

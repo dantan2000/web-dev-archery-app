@@ -1,16 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-<<<<<<< HEAD
 import Header from './components/Header';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from 'react';
 import CurrUserContext from './contexts/CurrUserContext';
-=======
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import ProfilePage from './components/ProfilePage';
+import SearchPage from './components/Search';
+import HomePage from './components/HomePage';
 import EventDetails from './components/Event/EventDetails';
-import Header from './components/Header';
-
->>>>>>> selin
+import LoginPage from './components/LoginPage';
+import ScorecardDetails from './components/Scorecard/ScorecardDetails';
+import EditProfilePage from './components/ProfilePage/EditProfilePage';
+import NotFound from './components/NotFound';
 
 function App() {
   // State for the current user
@@ -24,8 +25,16 @@ function App() {
         <div className="container">
           <Header/>
           <Routes>
+            <Route path='/' exact={true} element={<HomePage/>}/>
+            <Route path='/search' element={<SearchPage/>}/>
+            <Route path="/profile/:username" element={<ProfilePage/>}/>
+            <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path='/edit_profile/:uid' element={<EditProfilePage/>}/>
+            <Route path='/scorecard/:sid' element={<ScorecardDetails/>}/>
+            <Route path='/edit_scorecard/:sid' element={<ScorecardDetails/>}/>
             <Route path="/events/:eid" element={<EventDetails/>}/>
-            {/* <Route path="/" element={<Header/>}/> */}
+            <Route path='/sign:type' element={<LoginPage/>}/>
+            <Route path='*' element={<NotFound/>}/>
           </Routes>
         </div>
       </BrowserRouter>
