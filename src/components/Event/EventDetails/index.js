@@ -80,5 +80,4 @@ const EventDetails = () => {
   }
   return <div>loading...</div>
 }
-}
 export default EventDetails;
