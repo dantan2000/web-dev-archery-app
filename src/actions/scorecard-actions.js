@@ -42,10 +42,10 @@ export const updateScorecard = async (dispatch, scorecard) => {
     });
 }
 
-export const deleteScorecard = async (dispatc, tuit) => {
+export const deleteScorecard = async (dispatch, scorecard) => {
     const response = await services.deleteScorecard(scorecard);
     dispatch({
         type: DELETE_SCORECARD,
         scorecard
-    })
+    });
 }
