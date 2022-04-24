@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector, useDispatch } from 'react-redux'
 import EventListItem from "./EventListItem";
 
-const EventList = ({events=[]}) => {
+
+const EventList = () => {
     const events = useSelector(state => state.events);
-    const dispatch = useDipatch();
+    const dispatch = useDispatch();
 
     //TODO implement findAllEvents
     useEffect(() => findAllEvents(dispatch, []));
