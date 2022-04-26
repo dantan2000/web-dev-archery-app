@@ -13,7 +13,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (events.length == 0 && !error) {
-      findEvents(document.location.search)
+      findEvents(document.location.search.substring(1))
         .then(response => setEvents(response))
         .catch(() => setError(true))
         .finally(() => setLoading(false));
@@ -31,7 +31,7 @@ const SearchPage = () => {
       <input type='date' id='EndDate' />
       <label for='DisciplineId'>Discipline: </label>
       <select name='DisciplineId' defaultValue={-1}>
-        <option value={-1}> -- select an option -- </option>
+        <option value=''> -- select an option -- </option>
         {
           Object.keys(disciplines).map(key => (<option value={key}>{disciplines[key]}</option>))
         }
