@@ -13,7 +13,7 @@ const EventDetails = () => {
     findEventByID(eid)
       .then(response => setEvent(response))
       .catch(() => setError(true));
-  })
+  }, [eid])
 
   if (error) {
     return <div>Error: Something went wrong :(</div>
