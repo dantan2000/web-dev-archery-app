@@ -31,11 +31,11 @@ const EventListItem = ({
         "IsLive": false
     }
 }) => {
-    const dispatch = useDispatch();
 
     return (
-        <Link to={`/events/${event.ID}`}>
-            <li className="list-group-item">
+        <Link className="text-decoration-none" to={`/events/${event.ID}`}>
+        
+            <li className="list-group-item list-group-item-action">
                 <div className="row">
                     <div className="col">
                         <b>{event.Name}</b>
