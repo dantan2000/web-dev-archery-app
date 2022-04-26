@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import ScorecardListItem from "./ScorecardListItem";
+import { findAllScorecards } from "../../../actions/scorecard-actions";
 
-const ScorecardList = ({scorecards=[]}) => {
+const ScorecardList = () => {
     const scorecards = useSelector(state => state.scorecards);
-    const dispatch = useDipatch();
+    const dispatch = useDispatch();
 
     //TODO implement findAllScorecards
     useEffect(() => findAllScorecards(dispatch, []));

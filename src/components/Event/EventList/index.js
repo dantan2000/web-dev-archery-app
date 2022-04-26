@@ -8,7 +8,7 @@ const EventList = () => {
     const dispatch = useDispatch();
 
     //TODO implement findAllEvents
-    useEffect(() => findAllEvents(dispatch, []));
+    //useEffect(() => findAllEvents(dispatch, []));
 
     return (
         <ul className="list-group">
