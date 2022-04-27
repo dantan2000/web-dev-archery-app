@@ -64,6 +64,7 @@ const createUser = async(req, res) => {
     newUser.username = req.body.username;
     newUser.bio = '';
     newUser.favorited_comps_by_id = [];
+    newUser.is_admin = false;
     newUser.setPassword(req.body.password);
     const sessionCookie = crypto.randomBytes(16).toString('hex');
     newUser.current_cookie = sessionCookie;
