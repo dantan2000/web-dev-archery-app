@@ -11,6 +11,7 @@ const HomePage = () => {
         <EventList/>
       </div>
       <div>
+      <h2>Featured Scorecards</h2>
         <ScorecardList/>
       </div>
 

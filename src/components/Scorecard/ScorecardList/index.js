@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-
-import ScorecardListItem from "./ScorecardListItem";
 import { findAllScorecards } from "../../../services/scorecard-services";
+import ScorecardListItem from "./ScorecardListItem";
 
 const ScorecardList = () => {
-
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false)
     const [scorecards, setScorecards] = useState([]);
@@ -20,16 +18,29 @@ const ScorecardList = () => {
 
     return (
         <>
-            <ul className="list-group">
-                {
-                    scorecards.map(scorecard =>
-                        <ScorecardListItem key={scorecard._id}
-                            scorecard={scorecard} />)
-                }
-            </ul>
-            <h2>Featured Scorecards</h2>
             {loading && <div>Loading...</div>}
-            {!error && !loading && JSON.stringify(scorecards)}
+            {!error && !loading &&
+                <ul className="list-group">
+                    <li className="list-group-item list-group-item-info">
+                        <div className="row">
+                            <div className="col">
+                                <b>Archer</b>
+                            </div>
+                            <div className="col">
+                                Event
+                            </div>
+                            <div className="col">
+                                Start - End Dates
+                            </div>
+                        </div>
+                    </li>
+                    {
+                        scorecards.map(scorecard =>
+                            <ScorecardListItem key={scorecard._id}
+                                scorecard={scorecard} />)
+                    }
+                </ul>
+            }
             {error && !loading && <div>An unexpected error occured. Please try again later.</div>}
         </>
 
