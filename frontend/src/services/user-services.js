@@ -2,15 +2,11 @@ import axios from 'axios';
 const API_BASE = process.env.REACT_APP_API_BASE;
 const USERS_API = `${API_BASE}/users`;
 
-// Attempts to create user, returns whether successful or not
+// Attempts to create user, returns the created user if successful, errors otherwise
 // If successful, automatically sets browser cookies
 export const createUser = async(newUser) => {
-  try {
-    const response = await axios.post(USERS_API, newUser);
-    return true;
-  } catch (err) {
-    return false;
-  }
+  const response = await axios.post(USERS_API, newUser);
+  return response;
 }
 
 // Finds all users in the database

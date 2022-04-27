@@ -59,34 +59,36 @@ const SignUp = () => {
 
   return <>
     <div>Sign Up</div>
-    <label for='username'>Username: </label>
-    <input type='text' name='username' id='username'/>
-    <label for='username'>Password: </label>
-    <input type='password' name='password' id='password'/>
-    <label for='username'>Confirm Password: </label>
-    <input type='password' name='password' id='passwordConfirm'/>
-    
-    <div className='custom-control custom-switch'>
-      <input
-        type='checkbox'
-        className='custom-control-input'
-        id='admin_requested'
-        readOnly
-      />
-      <label className='custom-control-label' htmlFor='admin_requested'>
-        Apply to be an event admin
-      </label>
-    </div>
+    <div onKeyDown={submitOnEnter}>
+      <label for='username'>Username: </label>
+      <input type='text' name='username' id='username'/>
+      <label for='username'>Password: </label>
+      <input type='password' name='password' id='password'/>
+      <label for='username'>Confirm Password: </label>
+      <input type='password' name='password' id='passwordConfirm'/>
+      
+      <div className='custom-control custom-switch'>
+        <input
+          type='checkbox'
+          className='custom-control-input'
+          id='admin_requested'
+          readOnly
+        />
+        <label className='custom-control-label' htmlFor='admin_requested'>
+          Apply to be an event admin
+        </label>
+      </div>
 
-    {<PrivacyPolicy/>}
-    
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="privacyPolicyConsent"/>
-      <label class="form-check-label" for="privacyPolicyConsent">I have read and agree with the privacy policy above</label>
-    </div>
+      {<PrivacyPolicy/>}
+      
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="privacyPolicyConsent"/>
+        <label class="form-check-label" for="privacyPolicyConsent">I have read and agree with the privacy policy above</label>
+      </div>
 
-    {errorMsg !== '' && errorMsg}
-    <button onClick={signup} disabled={awaitingResponse}>Sign Up</button>
+      {errorMsg !== '' && errorMsg}
+      <button onClick={signup} disabled={awaitingResponse}>Sign Up</button>
+    </div>
   </>;
 }
 export default SignUp;
