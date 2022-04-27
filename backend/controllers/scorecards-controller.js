@@ -1,5 +1,6 @@
 import * as usersDao from "../users/users-dao.js";
 import * as scorecardsDao from "../scorecards/scorecards-dao.js";
+import { verifyAdmin, requestingForSelf } from "./users-controller.js";
 
 const findAllScorecards = async(req, res) => {
   const scorecards = await scorecardsDao.findAllScorecards();
@@ -12,7 +13,7 @@ const findScorecardsByUserName = async(req, res) => {
   const user = await usersDao.findUserByUserName(req.params.username);
   if (user) {
     const requestingUser = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
-    if (requestingUser && user._id === requestingUser._id) {
+    if (requestingForSelf(req, requestingUser)) {
       publicOnly = false;
     }
     const scorecards = await scorecardsDao.findScorecardsByUserID(user._id, publicOnly);
@@ -26,10 +27,23 @@ const findScorecardsByUserName = async(req, res) => {
 
 const createScorecard = async(req, res) => {
   const newScorecard = req.body;
-  const insertedScorecard = await scorecardsDao.createScorecard(newScorecard);
-  res.status(201).send({
-    message: "Scorecard created!"
-  });
+  const scorecardUser = await usersDao.findUserByUserName(newScorecard.username)
+  if (scorecardUser) {
+    if (verifyAdmin(req) || (requestingForSelf(req, scorecardUser && newScorecard.compId === undefined))) {
+      const insertedScorecard = await scorecardsDao.createScorecard(newScorecard);
+      res.status(201).send({
+        message: "Scorecard created!"
+      });
+    } else {
+      res.status(401).send({
+        message: "Unauthorized"
+      });
+    }
+  } else {
+    res.status(400).send({
+      message: "User not found"
+    })
+  }
 }
 const updateScorecard = async(req, res) => {
   const scorecardIdToUpdate = req.params.uid;
