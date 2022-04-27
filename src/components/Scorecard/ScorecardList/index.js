@@ -9,7 +9,6 @@ const ScorecardList = () => {
     const [error, setError] = useState(false)
     const [scorecards, setScorecards] = useState([]);
 
-    //TODO implement findAllScorecards
     useEffect(() => {
         if (scorecards.length == 0 && !error) {
             findAllScorecards()
