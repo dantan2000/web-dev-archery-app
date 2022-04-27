@@ -21,6 +21,16 @@ const schema = mongoose.Schema({
     required: true,
   },
 
+  admin_requested: {
+    type: Boolean,
+    required: false
+  },
+
+  is_admin: {
+    type: Boolean,
+    required: true
+  },
+
   // Stretch goal: profile images
 
   hash: {
@@ -64,10 +74,19 @@ schema.methods.validPassword = function (password) {
 // Method to sterilize user data and prevent exposure of sensitive info
 schema.methods.sterilize = function () {
   return {
-    _id: this._id,
     username: this.username,
     bio: this.bio,
     favorited_comps_by_id: this.favorited_comps_by_id
+  }
+}
+
+schema.methods.sterilizeForSelf = function () {
+  return {
+    _id: this._id,
+    username: this.username,
+    bio: this.bio,
+    favorited_comps_by_id: this.favorited_comps_by_id,
+    is_admin: this.is_admin
   }
 }
 

@@ -4,6 +4,21 @@ import crypto from 'crypto';
 
 const cookieKey = 'amongLinesSession'
 
+// Returns whether the requesting user is an admin
+export const verifyAdmin = async(req) => {
+  const user = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
+  if (user && user.is_admin) {
+    return true;
+  }
+  return false;
+}
+
+// Returns whether the requesting user is the same as the given user
+export const requestingForSelf = async(req, user) => {
+  const reqUser = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
+  return reqUser === user;
+}
+
 const findAllUsers = async(req, res) => {
   const users = await usersDao.findAllUsers();
   // console.log("users: " + users)
@@ -15,11 +30,15 @@ const findAllUsers = async(req, res) => {
 const findUserByUserName = async(req, res) => {
   const user = await usersDao.findUserByUserName(req.params.username);
   if (user) {
-    res.json(user.sterilize());
+    if (requestingForSelf(req, user)) {
+      res.json(user.sterilizeForSelf());
+    } else {
+      res.json(user.sterilize());
+    }
   } else {
     res.status(400).send({
       message: 'User not found'
-    })
+    });
   }
 }
 
@@ -39,7 +58,7 @@ const createUser = async(req, res) => {
   if (user_with_username) {
     res.status(400).send({
       message: "Username is taken"
-    })
+    });
   } else {
     const newUser = new User();
     newUser.username = req.body.username;
@@ -55,32 +74,46 @@ const createUser = async(req, res) => {
     });
   }
 }
+
 const updateUser = async(req, res) => {
   const userIdToUpdate = req.body._id;
   const userToUpdate = await usersDao.findUserByID(userIdToUpdate);
-  if (userIdToUpdate){
-    if (req.body.username) {
-      userToUpdate.username = req.body.username;
+  if (requestingForSelf(req, userToUpdate)) {
+    if (userIdToUpdate) {
+      if (req.body.username) {
+        userToUpdate.username = req.body.username;
+      }
+      if (req.body.bio) {
+        userToUpdate.bio = req.body.bio;
+      }
+      if (req.body.favorited_comps_by_id) {
+        userToUpdate.favorited_comps_by_id = req.body.favorited_comps_by_id;
+      }
+      await usersDao.updateUser(userIdToUpdate, userToUpdate);
+      res.status(201).json(userToUpdate.sterilizeForSelf());
+    } else {
+      res.status(400).send({
+        message: 'Invalid user',
+      });
     }
-    if (req.body.bio) {
-      userToUpdate.bio = req.body.bio;
-    }
-    if (req.body.favorited_comps_by_id) {
-      userToUpdate.favorited_comps_by_id = req.body.favorited_comps_by_id;
-    }
-    await usersDao.updateUser(userIdToUpdate, userToUpdate);
-    res.sendStatus(201);
   } else {
-    res.status(400).send({
-      message: 'Invalid user',
+    res.status(401).send({
+      message: 'Unauthorized',
     });
   }
 }
 
 const deleteUser = async(req, res) => {
-  const userIdToDelete = req.params.uid;
-  const status = await usersDao.deleteUser(userIdToDelete);
-  res.sendStatus(200);
+  const userToDelete = await usersDao.findUserByID(req.params.uid);
+  if (requestingForSelf(self, userToDelete)) {
+    const userIdToDelete = req.params.uid;
+    const status = await usersDao.deleteUser(userIdToDelete);
+    res.sendStatus(200);
+  } else {
+    res.status(401).send({
+      message: 'Unauthorized',
+    });
+  }
 }
 
 const loginUser = async(req, res) => {
@@ -92,7 +125,7 @@ const loginUser = async(req, res) => {
     user.current_cookie = sessionCookie;
     await usersDao.updateUser(user._id, user);
     res.cookie(cookieKey, sessionCookie);
-    res.status(201).json(user.sterilize());
+    res.status(201).json(user.sterilizeForSelf());
   } else {
     res.status(400).send({
       message: "Incorrect username/password."
@@ -109,7 +142,7 @@ const logoutUser = async(req, res) => {
       message: 'Logged out!'
     });
   } else {
-    res.clearCookie(cookieKey).sendStatus(401);
+    res.clearCookie(cookieKey).sendStatus(200);
   }
 }
 

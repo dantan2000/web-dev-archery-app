@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const schema = mongoose.Schema({
   // User who created this scorecard
-  user_id: {
+  username: {
     type: String,
     required: true,
   },
