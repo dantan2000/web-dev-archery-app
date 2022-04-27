@@ -6,7 +6,7 @@ import "./Header.css"
 const Header = () => {
     return (
         <>
-            <nav className="navbar">
+            <nav className="navbar navbar-expand navbar-dark bg-secondary mb-4">
                 <div className="container-fluid">
                     <span className="navbad-brand">
                         <img
@@ -21,8 +21,8 @@ const Header = () => {
                         <li class="nav-item">
                             <Link className="nav-link" to="/search"><i className="fas fa-search"></i> Events</Link>
                         </li>
-                        <li class="nav-item">
-                            <ProfileElement className="nav-link"/>
+                        <li class="nav-item nav-link">
+                            <ProfileElement/>
                         </li>
 
                     </ul>

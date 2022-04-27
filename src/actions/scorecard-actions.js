@@ -15,15 +15,15 @@ export const createScorecard = async(dispatch, scorecard) => {
 }
 
 export const findAllScorecards = async(dispatch) => {
-    const scorecards = await service.findAllScorecards();
+    const scorecards = await services.findAllScorecards();
     dispatch({
         type: FIND_SCORECARDS,
         scorecards
     });
 }
 
-export const findScorecardsByUsername = (dispatch, username) => {
-    const scorecards = await service.findScorecardsByUsername(username);
+export const findScorecardsByUsername = async(dispatch, username) => {
+    const scorecards = await services.findScorecardsByUsername(username);
     dispatch({
         type: FIND_SCORECARDS,
         scorecards

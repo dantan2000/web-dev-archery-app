@@ -9,11 +9,11 @@ const ProfileElement = () => {
     }
     if(user){
         return(
-            <Link to="/profile">{user.username}</Link>
+            <Link className="nav-link" to="/profile">{user.username}</Link>
         )
     }
     return(
-        <Link to="/signin">Sign In/ Sign Up</Link>
+        <Link className="nav-link" to="/signin">Sign In/ Sign Up</Link>
     )
 }
 export default ProfileElement;
