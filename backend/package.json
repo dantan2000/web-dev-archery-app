@@ -1,0 +1,31 @@
+{
+  "name": "web-dev-archery-backend",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web Server for the Archery Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dantan2000/web-dev-archery-backend.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Archery"
+  ],
+  "author": "Dan Tan, Selin Yuksel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dantan2000/web-dev-archery-backend/issues"
+  },
+  "homepage": "https://github.com/dantan2000/web-dev-archery-backend#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "cookie-parser": "^1.4.6",
+    "querystring": "^0.2.1"
+  }
+}
