@@ -32,40 +32,42 @@ const EventDetails = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-9 wd-event-details-panel">
-              <div className='row mt-2'>
-                <div className='col-3'>
-                  <i className="fas fa-heart fa-2x" style={{ color: 'red' }}></i>{/*TODO make it hearted based on smt */}
+            <div className="card col-9">
+              <div>
+                <div className='row card-header mt-2'>
+                  <div className='col-3'>
+                    <i className="fas fa-heart fa-2x" style={{ color: 'red' }}></i>{/*TODO make it hearted based on smt */}
+                  </div>
+                  <div className='col-6 text-center'>
+                    <h3>{event.Name}</h3>
+                  </div>
+                  <div className='col-3 text-right'>
+                    {
+                      event.IsLive &&
+                      <i style={{color:"green"}} class="fas fa-video fa-lg"></i>
+                    }
+                    {
+                      !event.IsLive &&
+                      <i style={{color:"red"}} class="fas fa-video-slash fa-lg"></i>
+                    }
+                  </div>
                 </div>
-                <div className='col-6'>
-                  <h3>{event.Name}</h3>
-                </div>
-                <div className='col-3 text-right'>
-                  {
-                    event.IsLive &&
-                    <b>LIVE PLACEHOLDER</b>
-                  }
-                  {
-                    !event.IsLive &&
-                    <b>NOT LIVE PLACEHOLDER</b>
-                  }
+                <div className='card-body text-center'>
+                  FLAG<br/>
+                  {event.Place}, {event.CountryName}<br />
+                  Dates: {event.DFrom} to {event.DTo}<br />
+                  {/* TODO: make divisions map work */}
+                  Divisions: {event.ComDivisions.map(comDiv => {
+                    return (divisions[comDiv])
+                  })}
+
                 </div>
               </div>
 
-              <div className='wd-flag'>
-                FLAG
-              </div>
-              <div className='wd-details'>
-                {event.Place}, {event.CountryName}<br />
-                Dates: {event.DFrom} to {event.DTo}<br />
-                {/* TODO: make divisions map work */}
-                Divisions: {event.ComDivisions.map(comDiv => {
-                  return (divisions[comDiv])
-                })}
-
-              </div>
             </div>
+
             <div className="col-3">
+              {/* TODO followers */}
               <b>Archers interested in this event:</b><br />
               <ul>
                 List of users who favourited
