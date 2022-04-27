@@ -18,23 +18,25 @@ const SignIn = () => {
   const login = () => {
     if (!awaitingResponse) {
       setErrorMsg('');
-      loginUser(document.getElementById('username'), document.getElementById('username'))
+      setAwaitingResponse(true);
+      loginUser(document.getElementById('username'), document.getElementById('password'))
         .then(response => {
           setCurrUser(response);
           navigate('/');
         })
-        .catch(() => setErrorMsg('Invalid username/password'));
+        .catch(() => setErrorMsg('Invalid username/password'))
+        .finally(setAwaitingResponse(false));
     }
   }
 
   return <>
     <div>Sign In</div>
-      <label for='username'>Username: </label>
-      <input type='text' name='username' id='username'/>
-      <label for='username'>Password: </label>
-      <input type='password' name='password' id='password'/>
-      {errorMsg !== '' && errorMsg}
-      <button onClick={login}>Log In</button>
+    <label for='username'>Username: </label>
+    <input type='text' name='username' id='username'/>
+    <label for='username'>Password: </label>
+    <input type='password' name='password' id='password'/>
+    {errorMsg !== '' && errorMsg}
+    <button onClick={login} disabled={awaitingResponse}>Log In</button>
   </>;
 }
 export default SignIn;
