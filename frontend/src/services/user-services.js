@@ -59,6 +59,7 @@ export const updateUser = async(user) => {
 // Attempts to log in user, the user if successful, throws an error if not
 // If successful, will automatically set browser cookies
 export const loginUser = async(username, password) => {
+  console.log({username: username, password: password})
   const response = await axios.put(`${API_BASE}/user_login`, {username: username, password: password});
   return response.data;
 }
