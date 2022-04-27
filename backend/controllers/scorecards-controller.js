@@ -1,5 +1,5 @@
-import * as usersDao from "../users/users-dao";
-import * as scorecardsDao from "../scorecards/scorecards-dao";
+import * as usersDao from "../users/users-dao.js";
+import * as scorecardsDao from "../scorecards/scorecards-dao.js";
 
 const findAllScorecards = async(req, res) => {
   const scorecards = await scorecardsDao.findAllScorecards();
@@ -9,20 +9,26 @@ const findAllScorecards = async(req, res) => {
 
 const findScorecardsByUserName = async(req, res) => {
   let publicOnly = true;
-  const user = await usersDao.findUserByUserName(res.params.username);
-  const requestingUser = await usersDao.findUserByCookie(res.cookies.amongLinesSession);
-  if (user._id === requestingUser._id) {
-    publicOnly = false;
+  const user = await usersDao.findUserByUserName(req.params.username);
+  if (user) {
+    const requestingUser = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
+    if (requestingUser && user._id === requestingUser._id) {
+      publicOnly = false;
+    }
+    const scorecards = await scorecardsDao.findScorecardsByUserID(user._id, publicOnly);
+    res.json(scorecards);
+  } else {
+    res.status(400).send({
+      message: 'invalid username'
+    })
   }
-  const scorecards = scorecardsDao.findScorecardsByUserID(user._id, publicOnly);
-  res.json(scorecards);
 }
 
 const createScorecard = async(req, res) => {
   const newScorecard = req.body;
   const insertedScorecard = await scorecardsDao.createScorecard(newScorecard);
   res.status(201).send({
-    message: "Account created!"
+    message: "Scorecard created!"
   });
 }
 const updateScorecard = async(req, res) => {
@@ -37,6 +43,8 @@ const deleteScorecard = async(req, res) => {
   const status = await scorecardsDao.deleteScorecard(scorecardIdToDelete);
   res.sendStatus(200);
 }
+
+//TODO Scorecard by id
 
 
 export default (app) => {
