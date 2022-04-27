@@ -1,9 +1,9 @@
-import scorecardModel from './scorecards-model';
+import scorecardModel from './scorecards-model.js';
 
 // Find all scorecards made by a given user based on whether to show only public scorecards or all scorecards
 export const findScorecardsByUserID = (user_id, publicOnly = true) => {
   if (publicOnly) {
-    return scorecardModel.find({user_id: user_id, is_public: isPublic}).sort({date: 'desc'});
+    return scorecardModel.find({user_id: user_id, is_public: publicOnly}).sort({date: 'desc'});
   }
   return scorecardModel.find({user_id: user_id}).sort({date: 'desc'});
 }

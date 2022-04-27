@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import userController from "./controllers/users-controller.js";
 import scorecardController from "./controllers/scorecards-controller.js";
+import worldArcheryApiController from './controllers/world-archery-api-controller.js';
 import mongoose from 'mongoose';
 import cookieParser from "cookie-parser";
 
@@ -15,4 +16,5 @@ app.use(express.json());
 app.use(cookieParser());
 userController(app);
 scorecardController(app)
+worldArcheryApiController(app)
 app.listen(process.env.PORT || 4000);
