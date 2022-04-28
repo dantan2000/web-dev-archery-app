@@ -1,19 +1,28 @@
-import { Router, Link } from "react-router-dom"
+import { Router, Link } from "react-router-dom";
+import { useContext } from "react";
+
+import CurrUserContext from './../../contexts/CurrUserContext';
+import { findUserByCookie } from "../../services/user-services";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const ProfileElement = () => {
-    //TODO make a state variable for user
-    const user={
-        username: "Dan",
-        bio: "I do too much",
-        favorited_comps_by_id: []
-    }
-    if(user){
-        return(
-            <Link className="nav-link" to="/profile">{user.username}</Link>
-        )
-    }
-    return(
-        <Link className="nav-link" to="/signin">Sign In/ Sign Up</Link>
+  const { currUser, setCurrUser } = useContext(CurrUserContext)
+
+
+  useEffect(() => {
+    findUserByCookie()
+      .then(response => setCurrUser(response))
+      .catch(() => setCurrUser(undefined));
+  }, [document.cookie])
+
+  if (currUser) {
+    return (
+      <Link className="nav-link" to="/profile">{currUser.username}</Link>
     )
+  }
+  return (
+    <Link className="nav-link" to="/signin">Sign In/ Sign Up</Link>
+  )
 }
 export default ProfileElement;

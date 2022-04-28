@@ -1,5 +1,4 @@
 import React from "react";
-import {useDispatch} from "react-redux";
 
 const ScorecardListItem = ({
     scorecard={
@@ -21,7 +20,6 @@ const ScorecardListItem = ({
         ],
         "note": "Test Scorecard",
     }}) => {
-    const dispatch = useDispatch();
 
     //const comp = api.get(scorecard.comp_id);
 
