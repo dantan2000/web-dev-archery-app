@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 
 
@@ -55,6 +55,7 @@ const SignIn = () => {
     {errorMsg !== '' && errorMsg}
     <button onClick={login} disabled={awaitingResponse}>Log In</button>
     </div>
+    <Link to='/signup'>Sign Up</Link>
   </>;
 }
 export default SignIn;
