@@ -28,7 +28,7 @@ const HomePage = () => {
     if (events.length == 0 && !evError) {
       findEvents(document.location.search.substring(1))
         .then(response => setEvents(response))
-        // .catch(() => setEVError(true))
+        .catch(() => setEVError(true))
         .finally(() => setEVLoading(false));
     }
   }, [])
