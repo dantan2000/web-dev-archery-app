@@ -19,7 +19,7 @@ const ScorecardListItem = ({
             [9,8,0],
         ],
         "note": "Test Scorecard",
-    }}) => {
+    }, showArcher, showScore, showNote}) => {
 
     //const comp = api.get(scorecard.comp_id);
 
@@ -27,15 +27,11 @@ const ScorecardListItem = ({
         // TODO Link to individual scorecards
         <li className="list-group-item list-group-item-action">
             <div className="row">
-                <div className="col">
-                    <b>{scorecard.archer}</b>
-                </div>
-                <div className="col">
-                    {/* {scorecard.comp} */}
-                </div>
-                <div className="col">
-                    {scorecard.date}
-                </div>
+                {showArcher && <div className="col"><b>{scorecard.archer}</b></div>}
+                <div className="col"><b>{/* {scorecard.comp} */}</b></div>
+                {showScore && <div className="col">{scorecard.arrow_score}</div>}
+                {showNote && <div className="col">{scorecard.note}</div>}
+                <div className="col">{scorecard.date}</div>
             </div>
         </li>
     )
