@@ -3,6 +3,10 @@ import User from "../users/users-model.js";
 import crypto from 'crypto';
 
 const cookieKey = 'amongLinesSession'
+const cookieOptions = {
+  sameSite: 'none',
+  secure: true
+}
 
 // Returns whether the requesting user is an admin
 export const verifyAdmin = async(req) => {
@@ -43,6 +47,9 @@ const findUserByUserName = async(req, res) => {
 }
 
 const findUserByCookie = async(req, res) => {
+  console.log('cookie: ');
+  console.log(req.cookies.amongLinesSession);
+  console.log(req.cookies);
   const user = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
   if (user) {
     res.json(user.sterilize());
@@ -64,6 +71,7 @@ const createUser = async(req, res) => {
     newUser.username = req.body.username;
     newUser.bio = '';
     newUser.favorited_comps_by_id = [];
+    newUser.is_admin = false;
     newUser.setPassword(req.body.password);
     const sessionCookie = crypto.randomBytes(16).toString('hex');
     newUser.current_cookie = sessionCookie;
@@ -124,7 +132,7 @@ const loginUser = async(req, res) => {
     const sessionCookie = crypto.randomBytes(16).toString('hex');
     user.current_cookie = sessionCookie;
     await usersDao.updateUser(user._id, user);
-    res.cookie(cookieKey, sessionCookie);
+    res.cookie(cookieKey, sessionCookie, cookieOptions);
     res.status(201).json(user.sterilizeForSelf());
   } else {
     res.status(400).send({
