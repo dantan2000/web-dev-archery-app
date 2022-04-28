@@ -4,12 +4,13 @@ import Scorecards from "./Scorecards";
 import PrivacyPolicy from "../PrivacyPolicy";
 import "./ProfilePage.css"
 
-const ProfilePage = () => {
-  const user = {
+const ProfilePage = ({
+  user = {
     username: "Dan",
     bio: "I do too much",
     favorited_comps_by_id: []
   }
+}) => {
   return (
     <>
       {/* <div>Profile Page</div> */}
@@ -17,7 +18,7 @@ const ProfilePage = () => {
           className="wd-pp-image wd-container"
           src="/images/profile.png"/>
       <ul class="nav nav-tabs wd-lmargin">
-        <li class="nav-item">
+        <li class="nav-item active">
           <Link to="#profile" class="nav-link" data-bs-toggle="tab">{user.username}</Link>
         </li>
         <li class="nav-item">
@@ -36,8 +37,10 @@ const ProfilePage = () => {
 
       <div class="wd-tmargin tab-content">
         
-        <div class="tab-pane fade" id="profile">
-          profile test
+        <div class="tab-pane fade show active" id="profile">
+        {/* how do i add the user's id here? */}
+          <Link to="/edit_profile/:uid" class="btn btn-primary">Edit Profile</Link><br/>
+          <Link to="/edit_profile/:uid" class="btn mt-3 btn-primary">Logout</Link><br/>
         </div>
         <div class="tab-pane fade" id="scorecards">
           scorecard test
