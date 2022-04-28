@@ -1,6 +1,6 @@
 
 
 const Events = () => {
-  return <div>Events</div>;
+  return <div>User Events</div>;
 }
 export default Events;

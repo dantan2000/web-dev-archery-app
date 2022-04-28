@@ -1,6 +1,6 @@
 
 
 const Scorecards = () => {
-  return <div>Scorecards</div>;
+  return <div>User Scorecards</div>;
 }
 export default Scorecards;

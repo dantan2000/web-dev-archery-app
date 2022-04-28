@@ -21,7 +21,7 @@ const Header = () => {
                         <li class="nav-item">
                             <Link className="nav-link" to="/search"><i className="fas fa-search"></i> Events</Link>
                         </li>
-                        <li class="nav-item nav-link">
+                        <li class="nav-item">
                             <ProfileElement/>
                         </li>
 
