@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
+import CurrUserContext from '../../contexts/CurrUserContext'
 import Events from "./Events";
 import Scorecards from "./Scorecards";
 import PrivacyPolicy from "../PrivacyPolicy";
 import "./ProfilePage.css"
 
-const ProfilePage = ({
-  user = {
-    username: "Dan",
-    bio: "I do too much",
-    favorited_comps_by_id: []
-  }
-}) => {
+const ProfilePage = () => {
+  const { currUser, setCurrUser } = useContext(CurrUserContext)
+  
   return (
     <>
       {/* <div>Profile Page</div> */}
@@ -19,7 +18,7 @@ const ProfilePage = ({
           src="/images/profile.png"/>
       <ul class="nav nav-tabs wd-lmargin">
         <li class="nav-item active">
-          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{user.username}</Link>
+          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currUser.username}</Link>
         </li>
         <li class="nav-item">
           <Link class="nav-link" data-bs-toggle="tab" to="#scorecards" >Scorecards</Link>
@@ -32,7 +31,7 @@ const ProfilePage = ({
         </li>
       </ul>
       <div class="wd-lmargin">
-          {user.bio}
+          {currUser.bio}
       </div>
 
       <div class="wd-tmargin tab-content">
