@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+
+import CurrUserContext from '../../contexts/CurrUserContext'
 import { findScorecardsByUsername } from "../../services/scorecard-services";
 import ScorecardListItem from "../Scorecard/ScorecardList/ScorecardListItem";
 
-const Scorecards = ({
-  user = {
-    username: "Dan",
-    bio: "I do too much",
-    favorited_comps_by_id: []
-  }
-}) => {
+const Scorecards = () => {
+
+  const { currUser, setCurrUser } = useContext(CurrUserContext)
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false)
@@ -16,7 +15,7 @@ const Scorecards = ({
 
   useEffect(() => {
     if (scorecards.length == 0 && !error) {
-      findScorecardsByUsername(user.username)
+      findScorecardsByUsername(currUser.username)
         .then(response => setScorecards(response))
         .catch(() => setError(true))
         .finally(() => setLoading(false));
