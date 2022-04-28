@@ -1,23 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { findEvents } from "../../../services/world-archery-services";
+import React from "react";
 import EventListItem from "./EventListItem";
 
-
-const EventList = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false)
-    const [events, setEvents] = useState([]);
-
-
-    useEffect(() => {
-        if (events.length == 0 && !error) {
-            findEvents(document.location.search.substring(1))
-                .then(response => setEvents(response))
-                .catch(() => setError(true))
-                .finally(() => setLoading(false));
-        }
-    }, [])
-
+const EventList = ({events, error, loading}) => {
     return (
         <>
             {loading && <div>Loading...</div>}
