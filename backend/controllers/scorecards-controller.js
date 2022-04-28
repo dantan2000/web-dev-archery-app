@@ -58,13 +58,30 @@ const deleteScorecard = async(req, res) => {
   res.sendStatus(200);
 }
 
-//TODO Scorecard by id
+const findScorecardById = async(req, res) => {
+  const scorecard = await scorecardsDao.findCorecardById(req.params.uid);
+  const scorecardUser = await usersDao.findUserByUserName(scorecard.username);
+  if (scorecard) {
+    if (scorecard.is_public || requestingForSelf(req, scorecardUser)){
+      res.json(scorecard);
+    } else {
+      res.status(401).send({
+        message: 'Scorecard is private'
+      })
+    }
+  } else {
+    res.status(400).send({
+      message: 'Scorecard not found'
+    })
+  }
+}
 
 
 export default (app) => {
   app.post('/api/scorecards', createScorecard);
   app.get('/api/scorecards', findAllScorecards);
   app.get('/api/scorecards/:username', findScorecardsByUserName);
+  app.get('/api/scorecard/:uid', findScorecardById)
   app.put('/api/scorecards/:uid', updateScorecard);
   app.delete('/api/scorecards/:uid', deleteScorecard);
 }
