@@ -157,7 +157,8 @@ const flags = {
   NRU: <Flags.NR />,
   NPL: <Flags.NP />,
   NLD: <Flags.NL />,
-  ANT: <Flags.AN />,
+  // Does not exist in flag api
+  ANT: <></>,
   NCL: <Flags.NC />,
   NZL: <Flags.NZ />,
   NIC: <Flags.NI />,
