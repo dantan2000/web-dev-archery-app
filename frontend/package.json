@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^8.0.0",
     "axios": "^0.26.1",
+    "country-flag-icons": "^1.4.26",
+    "country-iso-3-to-2": "^1.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.1",
