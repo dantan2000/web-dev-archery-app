@@ -34,7 +34,7 @@ const schema = mongoose.Schema({
   // A note from the user about the shoot
   note: {
     type: String,
-    required: true,
+    required: false,
   },
 
 }, { collection: 'scorecards' });
