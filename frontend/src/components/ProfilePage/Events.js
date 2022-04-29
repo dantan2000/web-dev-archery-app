@@ -2,7 +2,6 @@ import React from "react";
 import EventListItem from "../Event/EventList/EventListItem";
 
 const Events = ({events, error, loading}) => {
-  
   return (
       <>
           {loading && <div>Loading...</div>}

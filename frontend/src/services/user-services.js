@@ -56,6 +56,11 @@ export const loginUser = async(username, password) => {
   return response.data;
 }
 
+// Logs user out
+export const logoutUser = async() => {
+  await axios.put(`${API_BASE}/user_logout`, {}, {withCredentials: true, credentials: 'include'});
+}
+
 // Finds all users that have favorited a given competition ID
 export const findUsersByFavCompID = async(compID) => {
   try {

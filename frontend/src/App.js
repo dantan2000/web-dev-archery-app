@@ -26,18 +26,6 @@ function App() {
         <Header />
         <div className="container">
           <Routes>
-<<<<<<< HEAD
-            <Route path='/' exact={true} element={<HomePage />} />
-            <Route path='/search' element={<SearchPage />} />
-            <Route path="/profile/:username" element={<ProfilePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path='/edit_profile/' element={<EditProfilePage />} />
-            <Route path='/scorecard/:sid' element={<ScorecardDetails />} />
-            <Route path='/edit_scorecard/:sid' element={<ScorecardDetails />} />
-            <Route path="/events/:eid" element={<EventDetails />} />
-            <Route path='/sign:type' element={<LoginPage />} />
-            <Route path='*' element={<NotFound />} />
-=======
             <Route path='/' exact={true} element={<HomePage/>}/>
             <Route path='/search' element={<SearchPage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
@@ -50,7 +38,6 @@ function App() {
             <Route path='/events/:eid' element={<EventDetails/>}/>
             <Route path='/sign:type' element={<LoginPage/>}/>
             <Route path='*' element={<NotFound/>}/>
->>>>>>> 517ac8050cb1d3e00248f52a78d82eb0d5b27340
           </Routes>
         </div>
       </BrowserRouter>

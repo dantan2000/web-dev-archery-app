@@ -31,24 +31,27 @@ const ScorecardListItem = ({
             [9, 8, 0],
         ],
         "note": "Test Scorecard",
-    }, showArcher, showScore, showNote }) => {
+    }, showArcher, showNote }) => {
 
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        if (events.length == 0) {
+        if (events.length == 0 && scorecard.comp_id) {
             findEventByID(scorecard.comp_id)
                 .then(response => setEvents(response))
         }
     }, [])
+    
+    console.log(events.Name);
+    console.log(scorecard.comp_id);
 
     return (
         <Link className="text-decoration-none" to={`/scorecard/${scorecard._id}`}>
             <li className="list-group-item list-group-item-action">
                 <div className="row">
-                    {!showArcher && <div className="col"><b>{scorecard.username}</b></div>}
-                    <div className="col"><b>{events.Name}</b></div>
-                    {showScore && <div className="col">{scorecard.arrow_score}</div>}
+                    {showArcher && <div className="col"><b>{scorecard.username}</b></div>}
+                    <div className="col"><b>{events.Name ? events.Name : 'N/A'}</b></div>
+                    <div className="col">{scorecard.arrow_score}</div>
                     {showNote && <div className="col">{scorecard.note}</div>}
                     <div className="col">{scorecard.date}</div>
                 </div>

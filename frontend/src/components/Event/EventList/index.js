@@ -1,7 +1,7 @@
 import React from "react";
 import EventListItem from "./EventListItem";
 
-const EventList = ({events, error, loading}) => {
+const EventList = ({ events, error, loading }) => {
     return (
         <>
             {loading && <div>Loading...</div>}
@@ -23,7 +23,9 @@ const EventList = ({events, error, loading}) => {
                     {
                         events.map(event =>
                             <EventListItem key={event.ID}
-                                event={event} />)
+                                event={event}
+                                error={error}
+                                loading={loading} />)
                     }
                 </ul>}
             {error && !loading && <div>An unexpected error occured. Please try again later.</div>}

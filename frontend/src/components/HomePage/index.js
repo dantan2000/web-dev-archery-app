@@ -50,9 +50,8 @@ const HomePage = () => {
           scorecards={scorecards}
           scError={scError}
           scLoading={scLoading}
-          showArcher="true"
-          showScore="false"
-          showNote="false" />
+          showArcher={true}
+          showNote={false} />
       </div>
 
     </>

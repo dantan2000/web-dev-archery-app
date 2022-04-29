@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import CurrUserContext from '../../contexts/CurrUserContext'
-import Events from "./Events";
-import Scorecards from "./Scorecards";
-import { findEvents } from "../../services/world-archery-services";
-import { findScorecardsByUsername } from "../../services/scorecard-services";
+import EventList from "../Event/EventList";
 import PrivacyPolicy from "../PrivacyPolicy";
+import ScorecardList from "../Scorecard/ScorecardList";
+import { findFavEventsByUsername, logoutUser, findUserByCookie } from "../../services/user-services";
+import { findScorecardsByUsername } from "../../services/scorecard-services";
 import "./ProfilePage.css"
 
 const ProfilePage = () => {
   const { currUser, setCurrUser } = useContext(CurrUserContext)
+
+  const navigate = useNavigate();
 
   const [evLoading, setEVLoading] = useState(true);
   const [evError, setEVError] = useState(false)
@@ -21,13 +23,13 @@ const ProfilePage = () => {
   const [scorecards, setScorecards] = useState([]);
 
   useEffect(() => {
-      if (events.length == 0 && !evError) {
-          findEvents(document.location.search.substring(1))
-              .then(response => setEvents(response))
-              .catch(() => setEVError(true))
-              .finally(() => setEVLoading(false));
-      }
-  }, [])
+    if (events.length == 0 && currUser && !evError) {
+      findFavEventsByUsername(currUser.username)
+        .then(response => setEvents(response))
+        .catch(() => setEVError(true))
+        .finally(() => setEVLoading(false));
+    }
+  }, [currUser])
 
   useEffect(() => {
     if (scorecards.length == 0 && currUser && !scError) {
@@ -38,12 +40,22 @@ const ProfilePage = () => {
     }
   }, [currUser])
 
-  
+  useEffect(() => {
+    findUserByCookie().catch(() => navigate('/signin'));
+  })
+
+
+  const logOut = async () => {
+    setCurrUser(undefined);
+    await logoutUser();
+    navigate("/");
+  }
+
   return (
     <>
       <img
-          className="wd-pp-image wd-container"
-          src="/images/profile.png"/>
+        className="wd-pp-image wd-container"
+        src="/images/profile.png" />
       <ul class="nav nav-tabs wd-lmargin">
         <li class="nav-item active">
           <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currUser && currUser.username}</Link>
@@ -58,37 +70,37 @@ const ProfilePage = () => {
           <Link class="nav-link" data-bs-toggle="tab" to="#privacy" >Privacy Policy</Link>
         </li>
       </ul>
+
+      {/* TODO: if able, make it only on username tab */}
       <div class="wd-lmargin">
-          {currUser && currUser.bio}
+        {currUser && currUser.bio}
       </div>
 
       <div class="wd-tmargin tab-content">
-        
         <div class="tab-pane fade show active" id="profile">
-        {/* how do i add the user's id here? */}
           <Link to="/edit_profile/" class="btn mr-3 btn-primary">Edit Profile</Link>
-          <Link to="/edit_profile/" class="btn btn-primary">Logout</Link><br/>
+          <button onClick={logOut} class="btn btn-primary">Logout</button><br />
         </div>
+
         <div class="tab-pane fade" id="scorecards">
           scorecard test
-          <Scorecards
-          scorecards={scorecards}
-          error={scError}
-          loading={scLoading}
-          showArcher="false"
-          showScore="true"
-          showNote="true"/>
+          <ScorecardList
+            scorecards={scorecards}
+            error={scError}
+            loading={scLoading}
+            showArcher={false}
+            showNote={true} />
         </div>
         <div class="tab-pane fade" id="events">
           events test
-          <Events
-          events={events}
-          error={evError}
-          loading={evLoading}/>
+          <EventList
+            events={events}
+            error={evError}
+            loading={evLoading} />
         </div>
         <div class="tab-pane fade" id="privacy">
           privacy test
-          <PrivacyPolicy/>
+          <PrivacyPolicy />
         </div>
 
       </div>

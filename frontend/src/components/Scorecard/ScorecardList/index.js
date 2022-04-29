@@ -1,7 +1,7 @@
 import React from "react";
 import ScorecardListItem from "./ScorecardListItem";
 
-const ScorecardList = ({scorecards, scError, scLoading, showArcher, showScore, showNote}) => {
+const ScorecardList = ({scorecards, scError, scLoading, showArcher, showNote}) => {
     return (
         <>
             {scLoading && <div>Loading...</div>}
@@ -11,7 +11,7 @@ const ScorecardList = ({scorecards, scError, scLoading, showArcher, showScore, s
                         <div className="row">
                             {showArcher && <div className="col"><b>Archer</b></div>}
                             <div className="col">Event</div>
-                            {showScore && <div className="col">Score</div>}
+                            <div className="col">Score</div>
                             {showNote && <div className="col">Note</div>}
                             <div className="col">Date</div>
                         </div>
@@ -22,7 +22,6 @@ const ScorecardList = ({scorecards, scError, scLoading, showArcher, showScore, s
                                 key={scorecard._id}
                                 scorecard={scorecard}
                                 showArcher={showArcher}
-                                showScore={showScore}
                                 showNote={showNote}/>)
                     }
                 </ul>
