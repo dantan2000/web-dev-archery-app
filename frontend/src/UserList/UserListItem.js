@@ -8,7 +8,7 @@ const UserListItem = ({
   }
 }) => {
 
-  return <li key={user.username}><Link to={`profile/${user.username}`}>{user.username}</Link></li>
+  return <Link to={`profile/${user.username}`}><li className='border border-light list-group-item list-group-item-action' key={user.username}>{user.username}</li></Link>
 }
 
 export default UserListItem;

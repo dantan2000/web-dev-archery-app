@@ -162,8 +162,12 @@ const EventDetails = () => {
                 </div>
               }
 
-              <b>Users interested in this event:</b><br />
-              <UserList users={favoritedUsers} />
+              <div className='border border-light'>
+                <div className='py-2 px-3 border border-light'>
+                  <b>Users interested in this event:</b>
+                </div>
+                <UserList users={favoritedUsers} />
+              </div>
             </div>
 
           </div>
