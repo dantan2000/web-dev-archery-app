@@ -39,16 +39,13 @@ const ScorecardTable = ({
     ],
     "note": "Test Scorecard",
   },
+  event = undefined,
   editable = false,
   updateScorecard = () => { }
 }) => {
 
   const updateUsername = (e) => {
     updateScorecard({ ...scorecard, username: e.target.value });
-  }
-
-  const updateCompId = (e) => {
-    updateScorecard({ ...scorecard, comp_id: e.target.value });
   }
 
   const updateDate = (e) => {
@@ -128,32 +125,38 @@ const ScorecardTable = ({
   return <div>
     <div>
       <label htmlFor='username'>Archer: </label>
-      <input disabled={!editable} type='text' name='username' id='username' defaultValue={scorecard.username} onChange={updateUsername} />
+      <input disabled={!editable || !scorecard.comp_id} type='text' name='username' id='username' defaultValue={scorecard.username} onChange={updateUsername} />
     </div>
 
-    <div>
-      <label htmlFor='comp_id'>Event ID: </label>
-      <input disabled={!editable} type='number' name='comp_id' id='comp_id' defaultValue={scorecard.comp_id} onChange={updateCompId} />
-    </div>
+    {
+      scorecard.comp_id &&
+      <div>
+        <label htmlFor='event_name'>Event: </label>
+        <input disabled={true} type='text' name='event_name' id='event_name' size={event ? event.Name.length : 20} value={event ? event.Name : ''} />
+      </div>
+    }
 
     <div>
       <label htmlFor='date'>Date: </label>
       <input disabled={!editable} type='date' name='date' id='date' defaultValue={scorecard.date} onChange={updateDate} />
     </div>
 
-    <div className='custom-control custom-switch'>
-      <input
-        type='checkbox'
-        className='custom-control-input'
-        id='is_public'
-        readOnly
-        defaultChecked={scorecard.is_public}
-        onChange={updateIsPublic}
-      />
-      <label className='custom-control-label' htmlFor='is_public'>
-        Make this scorecard public?
-      </label>
-    </div>
+    {
+      !editable || scorecard.comp_id &&
+      <div className='custom-control custom-switch'>
+        <input
+          type='checkbox'
+          className='custom-control-input'
+          id='is_public'
+          disabled={!editable}
+          defaultChecked={scorecard.is_public}
+          onChange={updateIsPublic}
+        />
+        <label className='custom-control-label' htmlFor='is_public'>
+          Make this scorecard public?
+        </label>
+      </div>
+    }
 
     <div>
       <table>

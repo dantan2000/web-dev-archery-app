@@ -5,6 +5,7 @@ import CurrUserContext from "../../../contexts/CurrUserContext";
 import { createScorecard } from "../../../services/scorecard-services";
 import ScorecardTable from '../ScorecardTable';
 import { findUserByCookie } from "../../../services/user-services";
+import { findEventByID } from "../../../services/world-archery-services";
 
 
 const ScorecardCreate = () => {
@@ -15,6 +16,7 @@ const ScorecardCreate = () => {
   const navigate = useNavigate();
 
   const [scorecard, setScorecard] = useState(undefined);
+  const [event, setEvent] = useState(undefined);
   const [errMsg, setErrMsg] = useState('');
 
   const makeEmptyScorecard = (currUser) => {
@@ -51,6 +53,7 @@ const ScorecardCreate = () => {
   useEffect(() => {
     if (scorecard === undefined) {
       findUserByCookie().then(response => {
+        console.log(response);
         if (eid === undefined || response.is_admin) {
           setScorecard(makeEmptyScorecard(response));
           setIsLoading(false);
@@ -59,6 +62,11 @@ const ScorecardCreate = () => {
         }
       })
       .catch(() => navigate('/signin'));
+    } 
+    if (eid !== undefined) {
+      findEventByID(eid)
+        .then(response => setEvent(response))
+        .catch(() => navigate('/create_scorecard'))
     }
   }, [eid]);
 
@@ -132,7 +140,7 @@ const ScorecardCreate = () => {
   return <div>
     <h1>Create Scorecard</h1>
     {isLoading && <div>Loading...</div>}
-    {scorecard && <ScorecardTable scorecard={scorecard} editable={true} updateScorecard={updateScorecard} />}
+    {scorecard && <ScorecardTable scorecard={scorecard} event={event} editable={true} updateScorecard={updateScorecard} />}
     <div>{errMsg !== '' && errMsg}</div>
     <button onClick={submitScorecard}>Submit Scorecard</button>
     <button onClick={fillArrowScores}>Fill in Arrow Scores</button>

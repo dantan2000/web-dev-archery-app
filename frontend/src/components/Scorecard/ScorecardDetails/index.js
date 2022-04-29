@@ -17,7 +17,7 @@ const ScorecardDetails = () => {
   }, [sid]);
 
   return <div>
-    <h1>Create Scorecard</h1>
+    <h1>Scorecard</h1>
     {error && <p>An unexpected error occurred.</p>}
     {!scorecard && <p>Loading scorecard...</p>}
     {scorecard && <ScorecardTable scorecard={scorecard} editable={false}/>}

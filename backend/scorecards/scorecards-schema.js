@@ -39,3 +39,14 @@ const schema = mongoose.Schema({
 
 }, { collection: 'scorecards' });
 export default schema;
+
+schema.methods.fixDate = function () {
+  return {
+    _id: this._id,
+    username: this.username,
+    date: this.date.toISOString().substring(0, 10),
+    is_public: this.is_public,
+    arrow_scores: this.arrow_scores,
+    note: this.note
+  }
+}

@@ -2,9 +2,11 @@ import * as usersDao from "../users/users-dao.js";
 import * as scorecardsDao from "../scorecards/scorecards-dao.js";
 import { verifyAdmin, requestingForSelf } from "./users-controller.js";
 
+
 const findAllScorecards = async(req, res) => {
-  const scorecards = await scorecardsDao.findAllScorecards();
-  // console.log("users: " + users)
+  let scorecards = await scorecardsDao.findAllScorecards();
+  scorecards = scorecards.map((scorecard) => scorecard.fixDate());
+  console.log(scorecards);
   res.json(scorecards);
 } 
 
@@ -17,7 +19,7 @@ const findScorecardsByUserName = async(req, res) => {
       publicOnly = false;
     }
     const scorecards = await scorecardsDao.findScorecardsByUserID(user._id, publicOnly);
-    res.json(scorecards);
+    res.json(scorecards.map(scorecard => scorecard.fixDate()));
   } else {
     res.status(400).send({
       message: 'invalid username'
@@ -63,7 +65,7 @@ const findScorecardById = async(req, res) => {
   const scorecardUser = await usersDao.findUserByUserName(scorecard.username);
   if (scorecard) {
     if (scorecard.is_public || requestingForSelf(req, scorecardUser)){
-      res.json(scorecard);
+      res.json(scorecard.fixDate());
     } else {
       res.status(401).send({
         message: 'Scorecard is private'
