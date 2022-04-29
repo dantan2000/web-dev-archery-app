@@ -162,7 +162,7 @@ const EventDetails = () => {
                 </div>
               }
 
-              <b>Archers interested in this event:</b><br />
+              <b>Users interested in this event:</b><br />
               <UserList users={favoritedUsers} />
             </div>
 
