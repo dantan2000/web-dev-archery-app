@@ -6,7 +6,6 @@ import { verifyAdmin, requestingForSelf } from "./users-controller.js";
 const findAllScorecards = async(req, res) => {
   let scorecards = await scorecardsDao.findAllScorecards();
   scorecards = scorecards.map((scorecard) => scorecard.fixDate());
-  console.log(scorecards);
   res.json(scorecards);
 } 
 
