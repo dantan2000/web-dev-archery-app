@@ -1,6 +1,7 @@
 import * as usersDao from "../users/users-dao.js";
 import User from "../users/users-model.js";
 import crypto from 'crypto';
+import { getCompetitionByID } from "../world-archery-api/world-archery-api-dao.js";
 
 const cookieKey = 'amongLinesSession'
 const cookieOptions = {
@@ -160,12 +161,29 @@ const findUsersByFavCompID = async(req, res) => {
   res.json(users.map(user => user.sterilize()));
 }
 
+const findEventsByUsername = async(req, res) => {
+  const user = await usersDao.findUserByUserName(req.params.username);
+  if (user) {
+    const events = []
+    for (let i = 0; i < user.favorited_comps_by_id.length; i++) {
+      const waEvent = await getCompetitionByID(user.favorited_comps_by_id[i]);
+      events.push(waEvent);
+    }
+    res.json(events);
+  } else {
+    res.status(400).send({
+      message: 'User not found'
+    })
+  }
+}
+
 export default (app) => {
   app.post('/api/users', createUser);
   app.get('/api/users', findAllUsers);
   app.get('/api/users_by_fav_comp_id/:cid', findUsersByFavCompID);
   app.get('/api/user/:username', findUserByUserName);
   app.get('/api/user_by_cookie', findUserByCookie);
+  app.get('/api/user_events/:username', findEventsByUsername);
   app.put('/api/users/', updateUser);
   app.delete('/api/users/:uid', deleteUser);
   app.put('/api/user_login', loginUser);

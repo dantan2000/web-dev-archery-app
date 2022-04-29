@@ -69,3 +69,9 @@ export const findUsersByFavCompID = async(compID) => {
     return [];
   }
 }
+
+// Finds all events liked by a certain user given their username
+export const findFavEventsByUsername = async(username) => {
+  const response = await axios.get(`${API_BASE}/user_events/${username}`)
+  return response.data;
+}
