@@ -30,13 +30,13 @@ const ProfilePage = () => {
   }, [])
 
   useEffect(() => {
-    if (scorecards.length == 0 && !scError) {
+    if (scorecards.length == 0 && currUser && !scError) {
       findScorecardsByUsername(currUser.username)
         .then(response => setScorecards(response))
         .catch(() => setSCError(true))
         .finally(() => setSCLoading(false));
     }
-  }, [])
+  }, [currUser])
 
   
   return (
@@ -46,7 +46,7 @@ const ProfilePage = () => {
           src="/images/profile.png"/>
       <ul class="nav nav-tabs wd-lmargin">
         <li class="nav-item active">
-          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currUser.username}</Link>
+          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currUser && currUser.username}</Link>
         </li>
         <li class="nav-item">
           <Link class="nav-link" data-bs-toggle="tab" to="#scorecards" >Scorecards</Link>
@@ -59,15 +59,15 @@ const ProfilePage = () => {
         </li>
       </ul>
       <div class="wd-lmargin">
-          {currUser.bio}
+          {currUser && currUser.bio}
       </div>
 
       <div class="wd-tmargin tab-content">
         
         <div class="tab-pane fade show active" id="profile">
         {/* how do i add the user's id here? */}
-          <Link to="/edit_profile" class="btn btn-primary">Edit Profile</Link><br/>
-          <Link to="/edit_profile/:uid" class="btn mt-3 btn-primary">Logout</Link><br/>
+          <Link to="/edit_profile/" class="btn btn-primary">Edit Profile</Link><br/>
+          <Link to="/edit_profile/" class="btn mt-3 btn-primary">Logout</Link><br/>
         </div>
         <div class="tab-pane fade" id="scorecards">
           scorecard test

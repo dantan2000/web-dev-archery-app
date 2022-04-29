@@ -20,21 +20,21 @@ function App() {
   const [currUser, setCurrUser] = useState(undefined);
 
   return (
-    <CurrUserContext.Provider value={{currUser, setCurrUser}}>
+    <CurrUserContext.Provider value={{ currUser, setCurrUser }}>
       <BrowserRouter>
+        <Header />
         <div className="container">
-          <Header/>
           <Routes>
-            <Route path='/' exact={true} element={<HomePage/>}/>
-            <Route path='/search' element={<SearchPage/>}/>
-            <Route path="/profile/:username" element={<ProfilePage/>}/>
-            <Route path="/profile" element={<ProfilePage/>}/>
-            <Route path='/edit_profile/:uid' element={<EditProfilePage/>}/>
-            <Route path='/scorecard/:sid' element={<ScorecardDetails/>}/>
-            <Route path='/edit_scorecard/:sid' element={<ScorecardDetails/>}/>
-            <Route path="/events/:eid" element={<EventDetails/>}/>
-            <Route path='/sign:type' element={<LoginPage/>}/>
-            <Route path='*' element={<NotFound/>}/>
+            <Route path='/' exact={true} element={<HomePage />} />
+            <Route path='/search' element={<SearchPage />} />
+            <Route path="/profile/:username" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path='/edit_profile/' element={<EditProfilePage />} />
+            <Route path='/scorecard/:sid' element={<ScorecardDetails />} />
+            <Route path='/edit_scorecard/:sid' element={<ScorecardDetails />} />
+            <Route path="/events/:eid" element={<EventDetails />} />
+            <Route path='/sign:type' element={<LoginPage />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>

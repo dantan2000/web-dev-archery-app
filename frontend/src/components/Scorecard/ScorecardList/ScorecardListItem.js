@@ -2,7 +2,7 @@ import React from "react";
 
 const ScorecardListItem = ({
     scorecard={
-        "user_id": "12345",
+        "username": "12345",
         "comp_id": 14905,
         "date": "2020-08-28",
         "is_public": true,
@@ -27,7 +27,7 @@ const ScorecardListItem = ({
         // TODO Link to individual scorecards
         <li className="list-group-item list-group-item-action">
             <div className="row">
-                {showArcher && <div className="col"><b>{scorecard.archer}</b></div>}
+                {showArcher && <div className="col"><b>{scorecard.username}</b></div>}
                 <div className="col"><b>{/* {scorecard.comp} */}</b></div>
                 {showScore && <div className="col">{scorecard.arrow_score}</div>}
                 {showNote && <div className="col">{scorecard.note}</div>}
