@@ -66,8 +66,8 @@ const ProfilePage = () => {
         
         <div class="tab-pane fade show active" id="profile">
         {/* how do i add the user's id here? */}
-          <Link to="/edit_profile/" class="btn btn-primary">Edit Profile</Link><br/>
-          <Link to="/edit_profile/" class="btn mt-3 btn-primary">Logout</Link><br/>
+          <Link to="/edit_profile/" class="btn mr-3 btn-primary">Edit Profile</Link>
+          <Link to="/edit_profile/" class="btn btn-primary">Logout</Link><br/>
         </div>
         <div class="tab-pane fade" id="scorecards">
           scorecard test

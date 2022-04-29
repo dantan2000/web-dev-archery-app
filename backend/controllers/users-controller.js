@@ -52,7 +52,7 @@ const findUserByCookie = async(req, res) => {
   console.log(req.cookies);
   const user = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
   if (user) {
-    res.json(user.sterilize());
+    res.json(user.sterilizeForSelf());
   } else {
     res.status(401).send({
       message: 'invalid cookie'

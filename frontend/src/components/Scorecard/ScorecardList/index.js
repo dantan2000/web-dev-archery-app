@@ -1,7 +1,7 @@
 import React from "react";
 import ScorecardListItem from "./ScorecardListItem";
 
-const ScorecardList = (scorecards, scError, scLoading, showArcher, showScore, showNote) => {
+const ScorecardList = ({scorecards, scError, scLoading, showArcher, showScore, showNote}) => {
     return (
         <>
             {scLoading && <div>Loading...</div>}

@@ -6,6 +6,7 @@ import { findUserByCookie } from '../../services/user-services';
 import NotFound from '../NotFound';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import './Login.css'
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -44,7 +45,6 @@ const LoginPage = () => {
   }
 
   return <>
-    <div>Login page</div>
     {formComponent}
   </>;
 

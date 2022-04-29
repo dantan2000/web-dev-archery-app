@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
+import "./Login.css"
 
 
 import CurrUserContext from '../../contexts/CurrUserContext';
@@ -7,13 +8,13 @@ import { loginUser } from '../../services/user-services';
 
 const SignIn = () => {
   const [awaitingResponse, setAwaitingResponse] = useState(false);
-  const {currUser, setCurrUser} = useContext(CurrUserContext);
+  const { currUser, setCurrUser } = useContext(CurrUserContext);
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
 
   if (currUser) {
-    navigate('/'); 
+    navigate('/');
   }
 
   const handleResponse = (response) => {
@@ -39,23 +40,30 @@ const SignIn = () => {
   }
 
   const submitOnEnter = (e) => {
-    if(e && e.keyCode == 13) {
+    if (e && e.keyCode == 13) {
       login();
     }
   }
 
   return <>
-    <div>Sign In</div>
-    
-    <div onKeyDown={submitOnEnter}>
-    <label for='username'>Username: </label>
-    <input type='text' name='username' id='username'/>
-    <label for='username'>Password: </label>
-    <input type='password' name='password' id='password'/>
-    {errorMsg !== '' && errorMsg}
-    <button onClick={login} disabled={awaitingResponse}>Log In</button>
+    <div class="row">
+      <div class="text-right col">
+        <img
+          className="wd-login-logo"
+          src="/images/logo_noBG.png" />
+      </div>
+      <div class="col">
+        <div onKeyDown={submitOnEnter}>
+          <label for='username'>Username:</label><br/>
+          <input type='text' name='username' id='username' /><br/>
+          <label for='username'>Password: </label><br/>
+          <input type='password' name='password' id='password' /><br/>
+          {errorMsg !== '' && errorMsg}<br/>
+          <button class="btn-primary" onClick={login} disabled={awaitingResponse}>Log In</button>
+          <Link class="ml-2" to='/signup'>Sign Up</Link>
+        </div>
+      </div>
     </div>
-    <Link to='/signup'>Sign Up</Link>
   </>;
 }
 export default SignIn;

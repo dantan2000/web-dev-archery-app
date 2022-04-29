@@ -10,15 +10,11 @@ const Scorecards = ({ scorecards, error, loading, showArcher, showScore, showNot
         <ul className="list-group">
           <li className="list-group-item list-group-item-info">
             <div className="row">
-              <div className="col">
-                <b>Archer</b>
-              </div>
-              <div className="col">
-                Event
-              </div>
-              <div className="col">
-                Start - End Dates
-              </div>
+              {!showArcher && <div className="col"><b>Archer</b></div>}
+              <div className="col"><b>Event</b></div>
+              {showScore && <div className="col">Score</div>}
+              {showNote && <div className="col">Note</div>}
+              <div className="col">Date</div>
             </div>
           </li>
           {
