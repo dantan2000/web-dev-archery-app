@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { findEventByID } from '../../../services/world-archery-services';
 import divisions from '../../../mapping/divisions';
@@ -11,6 +11,7 @@ import ScorecardList from '../../Scorecard/ScorecardList';
 import { findScorecardsByEventId } from '../../../services/scorecard-services';
 import './EventDetails.css'
 import flags from '../../../mapping/flags';
+import BackButton from '../../BackButton';
 
 const EventDetails = () => {
   const [error, setError] = useState(false)
@@ -23,6 +24,8 @@ const EventDetails = () => {
   const [favoritedUsers, setFavoritedUsers] = useState([]);
 
   const { currUser, setCurrUser } = useContext(CurrUserContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     findEventByID(eid)
@@ -62,8 +65,9 @@ const EventDetails = () => {
     }
   }
 
-  console.log(event);
-  console.log(divisions);
+  const navigateToScorecardCreate = () => {
+    navigate(`/create_scorecard/${eid}`);
+  }
 
   if (error) {
     return <div>Error: Something went wrong :(</div>
@@ -73,8 +77,7 @@ const EventDetails = () => {
       <>
         <div>
           <div className="row">
-            {/* implement back button */}
-            <button type="button" className="btn btn-primary mb-5">Back</button>
+            <BackButton />
           </div>
           <div className="row mb-4">
             <div>
@@ -152,6 +155,13 @@ const EventDetails = () => {
             </div>
 
             <div className="col-3">
+              {
+                currUser && currUser.is_admin &&
+                <div className='my-3'>
+                  <button type="button" className="btn btn-primary my-4" onClick={navigateToScorecardCreate}>Add Event Scorecard</button>
+                </div>
+              }
+
               <b>Archers interested in this event:</b><br />
               <UserList users={favoritedUsers} />
             </div>
