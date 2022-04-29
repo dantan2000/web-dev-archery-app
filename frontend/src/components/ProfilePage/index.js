@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import CurrUserContext from '../../contexts/CurrUserContext'
 import EventList from "../Event/EventList";
-import PrivacyPolicy from "../PrivacyPolicy";
 import ScorecardList from "../Scorecard/ScorecardList";
 import { findFavEventsByUsername, logoutUser, findUserByCookie } from "../../services/user-services";
 import { findScorecardsByUsername } from "../../services/scorecard-services";
 import "./ProfilePage.css"
+import EditProfilePage from "./EditProfilePage";
 
 const ProfilePage = () => {
   const { currUser, setCurrUser } = useContext(CurrUserContext)
@@ -69,6 +69,9 @@ const ProfilePage = () => {
         <li class="nav-item">
           <Link class="nav-link" data-bs-toggle="tab" to="#privacy" >Privacy Policy</Link>
         </li>
+        <li class="nav-item">
+          <Link class="nav-link" data-bs-toggle="tab" to="#edit" >Edit Profile</Link>
+        </li>
       </ul>
 
       {/* TODO: if able, make it only on username tab */}
@@ -98,9 +101,9 @@ const ProfilePage = () => {
             error={evError}
             loading={evLoading} />
         </div>
-        <div class="tab-pane fade" id="privacy">
-          privacy test
-          <PrivacyPolicy />
+
+        <div class="tab-pane fade" id="edit">
+          <EditProfilePage />
         </div>
 
       </div>

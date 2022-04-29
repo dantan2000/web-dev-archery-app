@@ -30,7 +30,7 @@ function App() {
             <Route path='/search' element={<SearchPage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/profile/:username" element={<ProfilePage/>}/>
-            <Route path='/edit_profile/:uid' element={<EditProfilePage/>}/>
+            <Route path='/edit_profile' element={<EditProfilePage/>}/>
             <Route path='/scorecard/:sid' element={<ScorecardDetails/>}/>
             <Route path='/create_scorecard' element={<ScorecardCreate/>}/>
             <Route path='/create_scorecard/:eid' element={<ScorecardCreate/>}/>
