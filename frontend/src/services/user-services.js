@@ -24,15 +24,11 @@ export const findUserByUsername = async(username) => {
 }
 
 // Finds the user based on the browser's cookies
-// Returns undefined if no user was found
+// throws and error if no user is found
 export const findUserByCookie = async() => {
-  try {
-    const response = await axios.get(`${API_BASE}/user_by_cookie`, {withCredentials: true});
-    const user = response.data;
-    return user;
-  } catch (err) {
-    return undefined;
-  }
+  const response = await axios.get(`${API_BASE}/user_by_cookie`, {withCredentials: true});
+  const user = response.data;
+  return user;
 }
 
 // Deletes a user from the database

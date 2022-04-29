@@ -9,6 +9,7 @@ import SearchPage from './components/Search';
 import HomePage from './components/HomePage';
 import EventDetails from './components/Event/EventDetails';
 import LoginPage from './components/LoginPage';
+import ScorecardCreate from './components/Scorecard/ScorecardCreate';
 import ScorecardDetails from './components/Scorecard/ScorecardDetails';
 import EditProfilePage from './components/ProfilePage/EditProfilePage';
 import NotFound from './components/NotFound';
@@ -27,12 +28,14 @@ function App() {
           <Routes>
             <Route path='/' exact={true} element={<HomePage/>}/>
             <Route path='/search' element={<SearchPage/>}/>
-            <Route path="/profile/:username" element={<ProfilePage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/profile/:username" element={<ProfilePage/>}/>
             <Route path='/edit_profile/:uid' element={<EditProfilePage/>}/>
             <Route path='/scorecard/:sid' element={<ScorecardDetails/>}/>
+            <Route path='/create_scorecard' element={<ScorecardCreate/>}/>
+            <Route path='/create_scorecard/:eid' element={<ScorecardCreate/>}/>
             <Route path='/edit_scorecard/:sid' element={<ScorecardDetails/>}/>
-            <Route path="/events/:eid" element={<EventDetails/>}/>
+            <Route path='/events/:eid' element={<EventDetails/>}/>
             <Route path='/sign:type' element={<LoginPage/>}/>
             <Route path='*' element={<NotFound/>}/>
           </Routes>
