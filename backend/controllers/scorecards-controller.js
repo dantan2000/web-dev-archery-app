@@ -61,7 +61,7 @@ const deleteScorecard = async(req, res) => {
 }
 
 const findScorecardById = async(req, res) => {
-  const scorecard = await scorecardsDao.findCorecardById(req.params.uid);
+  const scorecard = await scorecardsDao.findScorecardById(req.params.uid);
   const scorecardUser = await usersDao.findUserByUserName(scorecard.username);
   if (scorecard) {
     if (scorecard.is_public || requestingForSelf(req, scorecardUser)){

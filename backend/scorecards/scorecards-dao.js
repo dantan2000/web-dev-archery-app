@@ -8,7 +8,7 @@ export const findScorecardsByUserID = (user_id, publicOnly = true) => {
   return scorecardModel.find({user_id: user_id}).sort({date: 'desc'});
 }
 
-export const findCorecardById = (id) => {
+export const findScorecardById = (id) => {
   return scorecardModel.findOne({_id: id});
 }
 
