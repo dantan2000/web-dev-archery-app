@@ -6,7 +6,7 @@ const EventList = ({ events, error, loading }) => {
         <>
             {loading && <div>Loading...</div>}
             {!error && !loading &&
-                <ul className="list-group">
+                <ul className="mb-5 list-group">
                     <li className="list-group-item list-group-item-info">
                         <div className="row">
                             <div className="col">
