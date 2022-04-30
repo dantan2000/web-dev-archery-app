@@ -8,7 +8,7 @@ const ScorecardListItem = ({
         "comp_id": 14905,
         "date": "2020-08-28",
         "is_public": true,
-        "arrow_score": [
+        "arrow_scores": [
             [9, 8, 7],
             [6, 6, 3],
             [4, 3, 2],
@@ -42,8 +42,8 @@ const ScorecardListItem = ({
         }
     }, [])
     
-    console.log(events.Name);
-    console.log(scorecard.comp_id);
+    let totalScore = 0;
+    scorecard.arrow_scores.forEach(end => end.forEach(score => totalScore += score));
 
     return (
         <Link className="text-decoration-none" to={`/scorecard/${scorecard._id}`}>
@@ -51,7 +51,7 @@ const ScorecardListItem = ({
                 <div className="row">
                     {showArcher && <div className="col"><b>{scorecard.username}</b></div>}
                     <div className="col"><b>{events.Name ? events.Name : 'N/A'}</b></div>
-                    <div className="col">{scorecard.arrow_score}</div>
+                    <div className="col">{totalScore}</div>
                     {showNote && <div className="col">{scorecard.note}</div>}
                     <div className="col">{scorecard.date}</div>
                 </div>
