@@ -42,8 +42,7 @@ export const deleteUser = async(user) => {
 // Updates a user in the database
 // Takes in a full User type
 export const updateUser = async(user) => {
-  const response = await axios
-    .put(`${USERS_API}/`, user, {withCredentials: true});
+  const response = await axios.put(`${USERS_API}`, user, {withCredentials: true});
   return response.data;
 }
 

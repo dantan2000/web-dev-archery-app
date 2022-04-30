@@ -6,9 +6,14 @@ import { verifyAdmin, requestingForSelf } from "./users-controller.js";
 const findAllScorecards = async(req, res) => {
   let scorecards = await scorecardsDao.findAllScorecards();
   scorecards = scorecards.map((scorecard) => scorecard.fixDate());
-  console.log(scorecards);
   res.json(scorecards);
 } 
+
+const findScorecardsByEventID = async(req, res) => {
+  let scorecards = await scorecardsDao.findScorecardsByEventID(req.params.eid);
+  scorecards = scorecards.map((scorecard) => scorecard.fixDate());
+  res.json(scorecards);
+}
 
 const findScorecardsByUserName = async(req, res) => {
   let publicOnly = true;
@@ -83,7 +88,8 @@ export default (app) => {
   app.post('/api/scorecards', createScorecard);
   app.get('/api/scorecards', findAllScorecards);
   app.get('/api/scorecards/:username', findScorecardsByUserName);
-  app.get('/api/scorecard/:uid', findScorecardById)
+  app.get('/api/scorecard/:uid', findScorecardById);
+  app.get('/api/event_scorecards/:eid', findScorecardsByEventID)
   app.put('/api/scorecards/:uid', updateScorecard);
   app.delete('/api/scorecards/:uid', deleteScorecard);
 }

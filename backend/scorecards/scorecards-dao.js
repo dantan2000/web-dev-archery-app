@@ -12,6 +12,10 @@ export const findScorecardById = (id) => {
   return scorecardModel.findOne({_id: id});
 }
 
+export const findScorecardsByEventID = (eid) => {
+  return scorecardModel.find({comp_id: eid, is_public: true});
+}
+
 export const findAllScorecards = () => {
   return scorecardModel.find({is_public: true}).sort({date: 'desc'});
 }
