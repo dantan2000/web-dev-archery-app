@@ -30,6 +30,12 @@ export const findScorecardById = async(sid) => {
   return scorecard
 }
 
+export const findScorecardsByEventId = async(eid) => {
+  const response = await axios.get(`${API_BASE}/event_scorecards/${eid}`)
+  const scorecards = response.data;
+  return scorecards
+}
+
 // Deletes a given scorecard
 export const deleteScorecard = async(scorecard) => {
   const response = await axios

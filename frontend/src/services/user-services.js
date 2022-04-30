@@ -43,7 +43,7 @@ export const deleteUser = async(user) => {
 // Takes in a full User type
 export const updateUser = async(user) => {
   const response = await axios
-    .put(`${USERS_API}/${user._id}`, user, {withCredentials: true});
+    .put(`${USERS_API}`, user, {withCredentials: true});
   return response.data;
 }
 
