@@ -6,7 +6,7 @@ const ScorecardList = ({scorecards, scError, scLoading, showArcher, showNote}) =
         <>
             {scLoading && <div>Loading...</div>}
             {!scError && !scLoading &&
-                <ul className="list-group">
+                <ul className="mb-5 list-group">
                     <li className="list-group-item list-group-item-info">
                         <div className="row">
                             {showArcher && <div className="col"><b>Archer</b></div>}

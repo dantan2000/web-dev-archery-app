@@ -30,8 +30,8 @@ const ProfilePage = () => {
   const [errMsg, setErrMsg] = useState();
 
   useEffect(() => {
-    console.log(currUser);
-    console.log(username && currUser && username === currUser.username)
+    // console.log(currUser);
+    // console.log(username && currUser && username === currUser.username)
     if (username && currUser && username === currUser.username) {
       navigate('/profile');
     }
