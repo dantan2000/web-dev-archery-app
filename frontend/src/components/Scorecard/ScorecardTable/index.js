@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const ArrowScore = ({
   val = undefined,
@@ -122,6 +123,9 @@ const ScorecardTable = ({
     return total;
   }
 
+  console.log(scorecard.comp_id);
+  console.log(editable);
+
   return <div>
     <div>
       <label htmlFor='username'>Archer: </label>
@@ -129,11 +133,21 @@ const ScorecardTable = ({
     </div>
 
     {
-      scorecard.comp_id &&
-      <div>
-        <label htmlFor='event_name'>Event: </label>
-        <input disabled={true} type='text' name='event_name' id='event_name' size={event ? event.Name.length : 20} value={event ? event.Name : ''} />
-      </div>
+      scorecard.comp_id && !editable &&
+      <Link to={`/events/${scorecard.comp_id}`}>
+        <div class='link-primary'>
+          <label htmlFor='event_name'>Event: </label>
+          <input disabled={true} type='text' name='event_name' id='event_name' size={event ? event.Name.length : 20} value={event ? event.Name : ''} />
+        </div>
+      </Link>
+    }
+
+    {
+      scorecard.comp_id && editable &&
+        <div>
+          <label htmlFor='event_name'>Event: </label>
+          <input disabled={true} type='text' name='event_name' id='event_name' size={event ? event.Name.length : 20} value={event ? event.Name : ''} />
+        </div>
     }
 
     <div>
@@ -199,9 +213,11 @@ const ScorecardTable = ({
           </tr>
         </thead>
         <tbody>
-          <td key='10s'>{countTens()}</td>
-          <td key='10s'>{countNines()}</td>
-          <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
+          <tr>
+            <td key='10s'>{countTens()}</td>
+            <td key='9s'>{countNines()}</td>
+            <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
+          </tr>
         </tbody>
       </table>
     </div>
