@@ -30,8 +30,6 @@ const ProfilePage = () => {
   const [errMsg, setErrMsg] = useState();
 
   useEffect(() => {
-    // console.log(currUser);
-    // console.log(username && currUser && username === currUser.username)
     if (username && currUser && username === currUser.username) {
       navigate('/profile');
     }
@@ -96,7 +94,6 @@ const ProfilePage = () => {
         }
       </ul>
 
-      {/* TODO: if able, make it only on username tab */}
       <div class="wd-lmargin">
         {currentUser && currentUser.bio}
       </div>
@@ -111,6 +108,7 @@ const ProfilePage = () => {
 
         <div class="tab-pane fade" id="scorecards">
           <h2>Scorecards</h2>
+          <Link to='/create_scorecard' class="btn mb-3 btn-primary">New Scorecard</Link>
           <ScorecardList
             scorecards={scorecards}
             error={scError}
@@ -119,7 +117,7 @@ const ProfilePage = () => {
             showNote={true} />
         </div>
         <div class="tab-pane fade" id="events">
-          events test
+        <h2>Events</h2>
           <EventList
             events={events}
             error={evError}
