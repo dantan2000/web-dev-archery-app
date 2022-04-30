@@ -42,8 +42,7 @@ export const deleteUser = async(user) => {
 // Updates a user in the database
 // Takes in a full User type
 export const updateUser = async(user) => {
-  const response = await axios
-    .put(`${USERS_API}`, user, {withCredentials: true});
+  const response = await axios.put(`${USERS_API}`, user, {withCredentials: true});
   return response.data;
 }
 
@@ -56,6 +55,11 @@ export const loginUser = async(username, password) => {
   return response.data;
 }
 
+// Logs user out
+export const logoutUser = async() => {
+  await axios.put(`${API_BASE}/user_logout`, {}, {withCredentials: true, credentials: 'include'});
+}
+
 // Finds all users that have favorited a given competition ID
 export const findUsersByFavCompID = async(compID) => {
   try {
@@ -64,4 +68,10 @@ export const findUsersByFavCompID = async(compID) => {
   } catch (err) {
     return [];
   }
+}
+
+// Finds all events liked by a certain user given their username
+export const findFavEventsByUsername = async(username) => {
+  const response = await axios.get(`${API_BASE}/user_events/${username}`)
+  return response.data;
 }

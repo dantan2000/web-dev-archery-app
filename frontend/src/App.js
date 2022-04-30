@@ -21,16 +21,16 @@ function App() {
   const [currUser, setCurrUser] = useState(undefined);
 
   return (
-    <CurrUserContext.Provider value={{currUser, setCurrUser}}>
+    <CurrUserContext.Provider value={{ currUser, setCurrUser }}>
       <BrowserRouter>
+        <Header />
         <div className="container">
-          <Header/>
           <Routes>
             <Route path='/' exact={true} element={<HomePage/>}/>
             <Route path='/search' element={<SearchPage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/profile/:username" element={<ProfilePage/>}/>
-            <Route path='/edit_profile/:uid' element={<EditProfilePage/>}/>
+            <Route path='/edit_profile' element={<EditProfilePage/>}/>
             <Route path='/scorecard/:sid' element={<ScorecardDetails/>}/>
             <Route path='/create_scorecard' element={<ScorecardCreate/>}/>
             <Route path='/create_scorecard/:eid' element={<ScorecardCreate/>}/>

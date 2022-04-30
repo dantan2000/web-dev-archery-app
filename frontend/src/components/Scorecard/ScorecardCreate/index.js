@@ -53,7 +53,6 @@ const ScorecardCreate = () => {
   useEffect(() => {
     if (scorecard === undefined) {
       findUserByCookie().then(response => {
-        console.log(response);
         if (eid === undefined || response.is_admin) {
           setScorecard(makeEmptyScorecard(response));
           setIsLoading(false);
