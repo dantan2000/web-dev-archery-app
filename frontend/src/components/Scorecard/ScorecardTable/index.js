@@ -158,7 +158,41 @@ const ScorecardTable = ({
       </div>
     }
 
-    <div>
+    <div className="row">
+      <div className="col-6">
+        {/* ask dan if he prefers just table or table-dark,
+        ditto on bordered and striped */}
+        {/* decide if you want table-responsive */}
+      <table className="table table-sm table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope='col'>End</th>
+            <th scope='col'>Arrow 1</th>
+            <th scope='col'>Arrow 2</th>
+            <th scope='col'>Arrow 3</th>
+            <th scope='col'>End Total</th>
+            <th scope='col'>Running Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            scorecard.arrow_scores.map((row, rowIndex) => {
+              return <tr key={'end_' + (rowIndex + 1)}>
+                <th scope='row'>{rowIndex + 1}</th>
+                {
+                  row.map((val, colIndex) => {
+                    return <td key={['score', rowIndex, colIndex].join('_')}><ArrowScore val={val} editable={editable} row={rowIndex} col={colIndex} updateArrow={updateArrow} /></td>
+                  })
+                }
+                <td key={['end_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateEndTotal(rowIndex)}</td>
+                <td key={['running_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateRunningTotal(rowIndex)}</td>
+              </tr>
+            })
+          }
+        </tbody>
+      </table>
+      </div>
+      {/* <div className="col-6">
       <table>
         <thead>
           <tr>
@@ -187,6 +221,8 @@ const ScorecardTable = ({
           }
         </tbody>
       </table>
+      </div> */}
+      
     </div>
 
     <div>
