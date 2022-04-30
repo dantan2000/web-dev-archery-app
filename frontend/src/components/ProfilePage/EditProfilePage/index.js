@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CurrUserContext from '../../../contexts/CurrUserContext';
 import { updateUser } from "../../../services/user-services";
 
-const EditProfilePage = () => {
+const EditProfilePage = ({setCurrentUser = () => {}}) => {
 
   const { currUser, setCurrUser } = useContext(CurrUserContext);
   const [newBio, setNewBio] = useState(currUser ? currUser.bio : '');
@@ -19,6 +19,7 @@ const EditProfilePage = () => {
   const submitUpdate = () => {
     updateUser({...currUser, bio: newBio}).then(res => {
       setCurrUser(res);
+      setCurrentUser(res);
     }).catch(err => setErrMsg(err.toString()))
   }
 
@@ -31,7 +32,7 @@ const EditProfilePage = () => {
       <label htmlFor='bio'>Bio: </label>
     </div>
     <div>
-      <textarea className='form-control' rows='3' cols='50' name='bio' id='bio' onChange={updateNewBio} value={newBio}></textarea>
+      <textarea className='form-control' rows='3' cols='50' name='bio' id='bio' onChange={updateNewBio} defaultValue={currUser && currUser.bio} value={newBio}></textarea>
     </div>
     {
       errMsg && <p className='text-danger'>{errMsg}</p>

@@ -1,18 +1,23 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import CurrUserContext from '../../contexts/CurrUserContext'
 import EventList from "../Event/EventList";
 import ScorecardList from "../Scorecard/ScorecardList";
-import { findFavEventsByUsername, logoutUser, findUserByCookie } from "../../services/user-services";
+import { findFavEventsByUsername, logoutUser, findUserByCookie, findUserByUsername } from "../../services/user-services";
 import { findScorecardsByUsername } from "../../services/scorecard-services";
 import "./ProfilePage.css"
 import EditProfilePage from "./EditProfilePage";
 
 const ProfilePage = () => {
-  const { currUser, setCurrUser } = useContext(CurrUserContext)
+
+  const { currUser, setCurrUser } = useContext(CurrUserContext);
+  const [currentUser, setCurrentUser] = useState()
+
 
   const navigate = useNavigate();
+
+  const { username } = useParams();
 
   const [evLoading, setEVLoading] = useState(true);
   const [evError, setEVError] = useState(false)
@@ -22,23 +27,41 @@ const ProfilePage = () => {
   const [scError, setSCError] = useState(false)
   const [scorecards, setScorecards] = useState([]);
 
+  const [errMsg, setErrMsg] = useState();
+
   useEffect(() => {
-    if (events.length == 0 && currUser && !evError) {
-      findFavEventsByUsername(currUser.username)
+    console.log(currUser);
+    console.log(username && currUser && username === currUser.username)
+    if (username && currUser && username === currUser.username) {
+      navigate('/profile');
+    }
+  }, [username, currUser])
+
+  useEffect(() => {
+    if (username) {
+      findUserByUsername(username).then(res => setCurrentUser(res)).catch(err => setErrMsg(err.toString()))
+    } else {
+      findUserByCookie().then(res => setCurrentUser(res)).catch(() => navigate('/signin'))
+    }
+  }, [username])
+
+  useEffect(() => {
+    if (events.length == 0 && currentUser && !evError) {
+      findFavEventsByUsername(currentUser.username)
         .then(response => setEvents(response))
         .catch(() => setEVError(true))
         .finally(() => setEVLoading(false));
     }
-  }, [currUser])
+  }, [currentUser])
 
   useEffect(() => {
-    if (scorecards.length == 0 && currUser && !scError) {
-      findScorecardsByUsername(currUser.username)
+    if (scorecards.length == 0 && currentUser && !scError) {
+      findScorecardsByUsername(currentUser.username)
         .then(response => setScorecards(response))
         .catch(() => setSCError(true))
         .finally(() => setSCLoading(false));
     }
-  }, [currUser])
+  }, [currentUser])
 
   useEffect(() => {
     findUserByCookie().catch(() => navigate('/signin'));
@@ -58,7 +81,7 @@ const ProfilePage = () => {
         src="/images/profile.png" />
       <ul class="nav nav-tabs wd-lmargin">
         <li class="nav-item active">
-          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currUser && currUser.username}</Link>
+          <Link to="#profile" class="nav-link" data-bs-toggle="tab">{currentUser && currentUser.username}</Link>
         </li>
         <li class="nav-item">
           <Link class="nav-link" data-bs-toggle="tab" to="#scorecards" >Scorecards</Link>
@@ -66,27 +89,28 @@ const ProfilePage = () => {
         <li class="nav-item">
           <Link class="nav-link" data-bs-toggle="tab" to="#events">Events</Link>
         </li>
-        <li class="nav-item">
-          <Link class="nav-link" data-bs-toggle="tab" to="#privacy" >Privacy Policy</Link>
-        </li>
-        <li class="nav-item">
-          <Link class="nav-link" data-bs-toggle="tab" to="#edit" >Edit Profile</Link>
-        </li>
+        {!username &&
+          <li class="nav-item">
+            <Link class="nav-link" data-bs-toggle="tab" to="#edit" >Edit Profile</Link>
+          </li>
+        }
       </ul>
 
       {/* TODO: if able, make it only on username tab */}
       <div class="wd-lmargin">
-        {currUser && currUser.bio}
+        {currentUser && currentUser.bio}
       </div>
 
       <div class="wd-tmargin tab-content">
-        <div class="tab-pane fade show active" id="profile">
-          <Link to="/edit_profile/" class="btn mr-3 btn-primary">Edit Profile</Link>
-          <button onClick={logOut} class="btn btn-primary">Logout</button><br />
-        </div>
+        {
+          !username &&
+          <div class="tab-pane fade show active" id="profile">
+            <button onClick={logOut} class="btn btn-primary">Logout</button><br />
+          </div>
+        }
 
         <div class="tab-pane fade" id="scorecards">
-          scorecard test
+          <h2>Scorecards</h2>
           <ScorecardList
             scorecards={scorecards}
             error={scError}
@@ -102,9 +126,11 @@ const ProfilePage = () => {
             loading={evLoading} />
         </div>
 
-        <div class="tab-pane fade" id="edit">
-          <EditProfilePage />
-        </div>
+        {!username &&
+          <div class="tab-pane fade" id="edit">
+            <EditProfilePage setCurrentUser={setCurrentUser} />
+          </div>
+        }
 
       </div>
 
