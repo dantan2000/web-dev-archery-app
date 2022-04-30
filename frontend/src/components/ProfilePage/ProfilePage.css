@@ -1,0 +1,18 @@
+.wd-pp-image{
+    height:90px;
+    width: auto;
+    border-radius: 50px;
+}
+
+.wd-container{
+    position: absolute;
+    margin: 0;
+}
+
+.wd-lmargin{
+    margin-left: 110px;
+}
+
+.wd-tmargin{
+    margin-top: 70px;
+}

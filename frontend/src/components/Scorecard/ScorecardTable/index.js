@@ -199,9 +199,12 @@ const ScorecardTable = ({
           </tr>
         </thead>
         <tbody>
-          <td key='10s'>{countTens()}</td>
-          <td key='10s'>{countNines()}</td>
-          <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
+          <tr>
+            <td key='10s'>{countTens()}</td>
+            <td key='9s'>{countNines()}</td>
+            <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
+          </tr>
+
         </tbody>
       </table>
     </div>
