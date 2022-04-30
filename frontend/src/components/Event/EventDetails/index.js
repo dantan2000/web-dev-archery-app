@@ -5,7 +5,7 @@ import { findEventByID } from '../../../services/world-archery-services';
 import divisions from '../../../mapping/divisions';
 import CurrUserContext from '../../../contexts/CurrUserContext';
 import { findUsersByFavCompID, updateUser } from '../../../services/user-services';
-// import UserList from '../../UserList';
+import UserList from '../../UserList';
 import disciplines from '../../../mapping/disciplines';
 import ScorecardList from '../../Scorecard/ScorecardList';
 import { findScorecardsByEventId } from '../../../services/scorecard-services';
@@ -162,7 +162,7 @@ const EventDetails = () => {
                 <div className='py-2 px-3 border border-light'>
                   <b>Users interested in this event:</b>
                 </div>
-                {/* <UserList users={favoritedUsers} /> */}
+                <UserList users={favoritedUsers} />
               </div>
             </div>
 

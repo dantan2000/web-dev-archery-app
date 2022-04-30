@@ -26,7 +26,6 @@ export const requestingForSelf = async(req, user) => {
 
 const findAllUsers = async(req, res) => {
   const users = await usersDao.findAllUsers();
-  // console.log("users: " + users)
   // res.json(users.map(user => user.sterilize()));
   // do not sterilize for testing purposes
   res.json(users);
@@ -48,9 +47,6 @@ const findUserByUserName = async(req, res) => {
 }
 
 const findUserByCookie = async(req, res) => {
-  console.log('cookie: ');
-  console.log(req.cookies.amongLinesSession);
-  console.log(req.cookies);
   const user = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
   if (user) {
     res.json(user.sterilizeForSelf());
