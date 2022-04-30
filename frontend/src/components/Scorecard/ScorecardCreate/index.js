@@ -11,7 +11,7 @@ import { findEventByID } from "../../../services/world-archery-services";
 const ScorecardCreate = () => {
 
   const { currUser, setCurrUser } = useContext(CurrUserContext);
-  const [ isLoading, setIsLoading ] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { eid } = useParams();
   const navigate = useNavigate();
 
@@ -60,8 +60,8 @@ const ScorecardCreate = () => {
           navigate('/create_scorecard');
         }
       })
-      .catch(() => navigate('/signin'));
-    } 
+        .catch(() => navigate('/signin'));
+    }
     if (eid !== undefined) {
       findEventByID(eid)
         .then(response => setEvent(response))
@@ -71,7 +71,7 @@ const ScorecardCreate = () => {
 
 
   const updateScorecard = (scorecard) => {
-    setScorecard(scorecard);
+    setScorecard({ ...scorecard });
   }
 
   const notEmpty = (value) => {
@@ -104,6 +104,25 @@ const ScorecardCreate = () => {
       && (scorecard.username === currUser.username || (currUser.is_admin && notEmpty(scorecard.comp_id)))
   }
 
+  const highlightInvalidScorecard = () => {
+    const isInvalid = 'is-invalid';
+    const elementIds = ['username', 'date', 'is_public'];
+    for (let row = 0; row < scorecard.arrow_scores.length; row++) {
+      for (let col = 0; col < scorecard.arrow_scores[row].length; col++) {
+        elementIds.push(['score', row, col].join('_'))
+      }
+    }
+    const elements = [];
+    elementIds.forEach(id => elements.push(document.getElementById(id)));
+    elements.forEach(element => {
+      if (notEmpty(element.value)) {
+        element.classList.remove(isInvalid);
+      } else {
+        element.classList.add(isInvalid);
+      }
+    });
+  }
+
   const submitScorecard = () => {
     setErrMsg('');
     if (validateScorecard()) {
@@ -115,7 +134,8 @@ const ScorecardCreate = () => {
         }
       })
     } else {
-      setErrMsg('Please ensure the scorecard is filled in completely.')
+      highlightInvalidScorecard();
+      setErrMsg('Please ensure the scorecard is filled in completely.');
     }
   }
 
@@ -132,17 +152,27 @@ const ScorecardCreate = () => {
       }
       newScores.push(newEnd);
     }
-    setScorecard({...scorecard, arrow_scores: newScores});
+    setScorecard({ ...scorecard, arrow_scores: newScores });
   }
 
 
   return <div>
     <h1>Create Scorecard</h1>
     {isLoading && <div>Loading...</div>}
-    {scorecard && <ScorecardTable scorecard={scorecard} event={event} editable={true} updateScorecard={updateScorecard} />}
-    <div>{errMsg !== '' && errMsg}</div>
-    <button onClick={submitScorecard}>Submit Scorecard</button>
-    <button onClick={fillArrowScores}>Fill in Arrow Scores</button>
+    {scorecard &&
+      <div>
+        <ScorecardTable scorecard={scorecard} event={event} editable={true} updateScorecard={updateScorecard} />
+        <div className='text-danger my-2'>{errMsg !== '' && <b>{errMsg}</b>}</div>
+        <div className='p-4'>
+          <div className='py-2'>
+            <button className='btn-primary' onClick={submitScorecard}>Submit Scorecard</button>
+          </div>
+          <div className='py-2'>
+            <button className='btn-primary' onClick={fillArrowScores}>Fill in Arrow Scores</button>
+          </div>
+        </div>
+      </div>
+    }
   </div>;
 }
 export default ScorecardCreate;

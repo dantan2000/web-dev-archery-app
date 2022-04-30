@@ -1,23 +1,8 @@
 import React from "react";
 import { useState } from "react";
-
-const ArrowScore = ({
-  val = undefined,
-  editable = false,
-  row = 0,
-  col = 0,
-  updateArrow = () => { },
-}) => {
-  const [value, setValue] = useState(val);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    updateArrow(row, col, e.target.value);
-  }
-
-  return <input defaultValue={val} disabled={!editable} type='number' onChange={onChange} min={0} max={10} />
-
-}
+import ScorecardInfo from './ScorecardInfo';
+import RoundTable from "./RoundTable";
+import './ScorecardTable.css';
 
 const ScorecardTable = ({
   scorecard = {
@@ -44,18 +29,6 @@ const ScorecardTable = ({
   updateScorecard = () => { }
 }) => {
 
-  const updateUsername = (e) => {
-    updateScorecard({ ...scorecard, username: e.target.value });
-  }
-
-  const updateDate = (e) => {
-    updateScorecard({ ...scorecard, date: e.target.value });
-  }
-
-  const updateIsPublic = (e) => {
-    updateScorecard({ ...scorecard, is_public: e.target.checked });
-  }
-
   const updateNote = (e) => {
     updateScorecard({ ...scorecard, note: e.target.value });
   }
@@ -64,17 +37,6 @@ const ScorecardTable = ({
     let newArrowScores = scorecard.arrow_scores;
     newArrowScores[row][col] = val;
     updateScorecard({ ...scorecard, arrow_scores: newArrowScores })
-  }
-
-  const calculateEndTotal = (rowIndex) => {
-    const row = scorecard.arrow_scores[rowIndex];
-    let endTotal = 0;
-    row.forEach(arrowScore => {
-      if (arrowScore) {
-        endTotal += Number(arrowScore);
-      }
-    });
-    return endTotal;
   }
 
   const calculateRunningTotal = (rowIndex) => {
@@ -90,16 +52,6 @@ const ScorecardTable = ({
       total += endTotal;
     }
     return total;
-  }
-
-  const rowIsDefined = (rowIndex) => {
-    const row = scorecard.arrow_scores[rowIndex];
-    for (let i = 0; i < row.length; i++) {
-      if (row[i] !== undefined && row[i] !== '') {
-        return true;
-      }
-    }
-    return false;
   }
 
   const countTens = () => {
@@ -122,134 +74,61 @@ const ScorecardTable = ({
     return total;
   }
 
+  const round1 = scorecard.arrow_scores.slice(0, 10);
+  const round2 = scorecard.arrow_scores.slice(10);
+
   return <div>
-    <div>
-      <label htmlFor='username'>Archer: </label>
-      <input disabled={!editable || !scorecard.comp_id} type='text' name='username' id='username' defaultValue={scorecard.username} onChange={updateUsername} />
-    </div>
 
-    {
-      scorecard.comp_id &&
-      <div>
-        <label htmlFor='event_name'>Event: </label>
-        <input disabled={true} type='text' name='event_name' id='event_name' size={event ? event.Name.length : 20} value={event ? event.Name : ''} />
-      </div>
-    }
+    <ScorecardInfo scorecard={scorecard} event={event} editable={editable} updateScorecard={updateScorecard} />
 
-    <div>
-      <label htmlFor='date'>Date: </label>
-      <input disabled={!editable} type='date' name='date' id='date' defaultValue={scorecard.date} onChange={updateDate} />
-    </div>
-
-    {
-      !editable || scorecard.comp_id &&
-      <div className='custom-control custom-switch'>
-        <input
-          type='checkbox'
-          className='custom-control-input'
-          id='is_public'
-          disabled={!editable}
-          defaultChecked={scorecard.is_public}
-          onChange={updateIsPublic}
-        />
-        <label className='custom-control-label' htmlFor='is_public'>
-          Make this scorecard public?
-        </label>
-      </div>
-    }
-
-    <div className="row">
-      <div className="col-6">
+    <div className="row my-5">
+      <div className="col-12 col-lg-6">
         {/* ask dan if he prefers just table or table-dark,
         ditto on bordered and striped */}
         {/* decide if you want table-responsive */}
-      <table className="table table-sm table-bordered table-striped">
-        <thead>
-          <tr>
-            <th scope='col'>End</th>
-            <th scope='col'>Arrow 1</th>
-            <th scope='col'>Arrow 2</th>
-            <th scope='col'>Arrow 3</th>
-            <th scope='col'>End Total</th>
-            <th scope='col'>Running Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            scorecard.arrow_scores.map((row, rowIndex) => {
-              return <tr key={'end_' + (rowIndex + 1)}>
-                <th scope='row'>{rowIndex + 1}</th>
-                {
-                  row.map((val, colIndex) => {
-                    return <td key={['score', rowIndex, colIndex].join('_')}><ArrowScore val={val} editable={editable} row={rowIndex} col={colIndex} updateArrow={updateArrow} /></td>
-                  })
-                }
-                <td key={['end_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateEndTotal(rowIndex)}</td>
-                <td key={['running_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateRunningTotal(rowIndex)}</td>
-              </tr>
-            })
-          }
-        </tbody>
-      </table>
+        <h2>Round 1</h2>
+        <RoundTable arrow_scores={round1} editable={editable} updateArrow={updateArrow} />
       </div>
-      {/* <div className="col-6">
-      <table>
-        <thead>
-          <tr>
-            <th scope='col'>End</th>
-            <th scope='col'>Arrow 1</th>
-            <th scope='col'>Arrow 2</th>
-            <th scope='col'>Arrow 3</th>
-            <th scope='col'>End Total</th>
-            <th scope='col'>Running Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            scorecard.arrow_scores.map((row, rowIndex) => {
-              return <tr key={'end_' + (rowIndex + 1)}>
-                <th scope='row'>{rowIndex + 1}</th>
-                {
-                  row.map((val, colIndex) => {
-                    return <td key={['score', rowIndex, colIndex].join('_')}><ArrowScore val={val} editable={editable} row={rowIndex} col={colIndex} updateArrow={updateArrow} /></td>
-                  })
-                }
-                <td key={['end_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateEndTotal(rowIndex)}</td>
-                <td key={['running_total', row].join('_')}>{rowIsDefined(rowIndex) && calculateRunningTotal(rowIndex)}</td>
-              </tr>
-            })
-          }
-        </tbody>
-      </table>
-      </div> */}
-      
+      <div className="col-12 col-lg-6">
+        {/* ask dan if he prefers just table or table-dark,
+        ditto on bordered and striped */}
+        {/* decide if you want table-responsive */}
+        <h2>Round 2</h2>
+        <RoundTable arrow_scores={round2} start={10} editable={editable} updateArrow={updateArrow} />
+      </div>
+
     </div>
 
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th scope='col'>10s</th>
-            <th scope='col'>9s</th>
-            <th scope='col'>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td key='10s'>{countTens()}</td>
-            <td key='9s'>{countNines()}</td>
-            <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
-          </tr>
 
-        </tbody>
-      </table>
-    </div>
+    <div className='row'>
+      <div className='col-12 col-lg-6 mb-5'>
+        <h2>Results</h2>
+        <table className="table table-sm table-bordered table-striped wd-summary-table">
+          <thead>
+            <tr>
+              <th scope='col'>10s</th>
+              <th scope='col'>9s</th>
+              <th scope='col'>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td key='10s'>{countTens()}</td>
+              <td key='9s'>{countNines()}</td>
+              <td key='total'>{calculateRunningTotal(scorecard.arrow_scores.length - 1)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <div>
-      <label htmlFor='note'>Note: </label>
-    </div>
-    <div>
-      <textarea disabled={!editable} cols='64' rows='8' name='note' id='note' defaultValue={scorecard.note} onChange={updateNote} />
+      <div className='col-12 col-lg-6'>
+        <div>
+          <label htmlFor='note'>Note: </label>
+        </div>
+        <div>
+          <textarea className='form-control' disabled={!editable} cols='64' rows='8' name='note' id='note' defaultValue={scorecard.note} onChange={updateNote} />
+        </div>
+      </div>
     </div>
 
   </div>
