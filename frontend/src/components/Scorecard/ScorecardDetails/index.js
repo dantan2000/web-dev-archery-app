@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findScorecardById } from "../../../services/scorecard-services";
 import { findEventByID } from "../../../services/world-archery-services";
+import BackButton from "../../BackButton";
 import ScorecardTable from '../ScorecardTable';
 
 
@@ -28,6 +29,7 @@ const ScorecardDetails = () => {
   }, [sid]);
 
   return <div>
+    <BackButton/>
     <h1>Scorecard</h1>
     {error && <p>An unexpected error occurred.</p>}
     {!scorecard && <p>Loading scorecard...</p>}
