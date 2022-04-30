@@ -42,8 +42,6 @@ const ScorecardListItem = ({
         }
     }, [])
     
-    console.log(events.Name);
-    console.log(scorecard.comp_id);
 
     return (
         <Link className="text-decoration-none" to={`/scorecard/${scorecard._id}`}>

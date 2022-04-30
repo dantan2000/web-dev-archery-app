@@ -36,7 +36,6 @@ const HomePage = () => {
 
   return (
     <>
-      <div>Home Page</div>
       <div>
         <h2>Upcoming Events</h2>
         <EventList
