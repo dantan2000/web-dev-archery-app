@@ -5,7 +5,7 @@ import { findEventByID } from '../../../services/world-archery-services';
 import divisions from '../../../mapping/divisions';
 import CurrUserContext from '../../../contexts/CurrUserContext';
 import { findUsersByFavCompID, updateUser } from '../../../services/user-services';
-import UserList from '../../../UserList';
+import UserList from '../../UserList';
 import disciplines from '../../../mapping/disciplines';
 import ScorecardList from '../../Scorecard/ScorecardList';
 import { findScorecardsByEventId } from '../../../services/scorecard-services';
@@ -144,12 +144,8 @@ const EventDetails = () => {
 
               <div className='mt-5'>
                 <h3>Scorecards for this event</h3>
-                {
-                  // TODO: Make show scorecards for only this event
-                  // <ScorecardList scorecards={scorecards} error={scError}/>
-                }
                 <div className='pt-2'>
-                  <ScorecardList />
+                  <ScorecardList scorecards={scorecards} showArcher={true} error={scError}/>
                 </div>
               </div>
             </div>
