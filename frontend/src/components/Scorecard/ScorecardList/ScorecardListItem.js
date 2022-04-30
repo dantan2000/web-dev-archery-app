@@ -42,11 +42,8 @@ const ScorecardListItem = ({
         }
     }, [])
     
-<<<<<<< HEAD
     let totalScore = 0;
     scorecard.arrow_scores.forEach(end => end.forEach(score => totalScore += score));
-=======
->>>>>>> main
 
     return (
         <Link className="text-decoration-none" to={`/scorecard/${scorecard._id}`}>
