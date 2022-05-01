@@ -165,10 +165,9 @@ const findEventsByUsername = async(req, res) => {
   const user = await usersDao.findUserByUserName(req.params.username);
   if (user) {
     const events = []
-    for (let i = 0; i < user.favorited_comps_by_id.length; i++) {
-      const waEvent = await getCompetitionByID(user.favorited_comps_by_id[i]);
-      events.push(waEvent);
-    }
+
+    await Promise.all(user.favorited_comps_by_id.map(id => getCompetitionByID(id).then(res => events.push(res))));
+    
     res.json(events);
   } else {
     res.status(400).send({
