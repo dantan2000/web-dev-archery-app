@@ -14,6 +14,9 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use((err, req, res, next) => {
+  res.status(500).send('Internal server error.')
+});
 userController(app);
 scorecardController(app)
 worldArcheryApiController(app)
