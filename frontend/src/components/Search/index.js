@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import disciplines from "../../mapping/disciplines";
 import EventList from '../Event/EventList';
@@ -32,23 +31,25 @@ const SearchPage = () => {
           </tr>
           <tr>
             <td><label for='StartDate'>Start Date: </label></td>
-            <td><input type="date" id='StartDate' /></td>
+            <td><input type="date" name='StartDate' /></td>
 
           </tr>
           <tr>
             <td><label for='EndDate'>End Date: </label></td>
-            <td><input type='date' id='EndDate' /></td>
+            <td><input type='date' name='EndDate' /></td>
 
 
           </tr>
           <tr>
             <td><label for='DisciplineId'>Discipline: </label></td>
-            <td><select name='DisciplineId' defaultValue={-1}>
-              <option value=''> -- select an option -- </option>
-              {
-                Object.keys(disciplines).map(key => (<option value={key}>{disciplines[key]}</option>))
-              }
-            </select></td>
+            <td>
+              <select name='DisciplineId' defaultValue={''}>
+                <option value=''> -- select an option -- </option>
+                {
+                  Object.keys(disciplines).map(key => (<option value={key}>{disciplines[key]}</option>))
+                }
+              </select>
+            </td>
 
           </tr>
         </tbody>
