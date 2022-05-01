@@ -48,9 +48,9 @@ const findUserByUserName = async(req, res) => {
 }
 
 const findUserByCookie = async(req, res) => {
-  console.log('cookie: ');
-  console.log(req.cookies.amongLinesSession);
-  console.log(req.cookies);
+  // console.log('cookie: ');
+  // console.log(req.cookies.amongLinesSession);
+  // console.log(req.cookies);
   const user = await usersDao.findUserByCookie(req.cookies.amongLinesSession);
   if (user) {
     res.json(user.sterilizeForSelf());
@@ -167,7 +167,7 @@ const findEventsByUsername = async(req, res) => {
     const events = []
 
     await Promise.all(user.favorited_comps_by_id.map(id => getCompetitionByID(id).then(res => events.push(res))));
-    
+
     res.json(events);
   } else {
     res.status(400).send({
