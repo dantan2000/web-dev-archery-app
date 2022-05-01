@@ -8,7 +8,7 @@
   "main": "server.js",
   "devDependencies": {},
   "scripts": {
-    "heroku-postbuild": "cd services/townService && npm ci && npm run build",
+    "heroku-postbuild": "cd backend && npm ci && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
