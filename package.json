@@ -17,6 +17,10 @@
   },
   "author": "Dan Tan, Selin Yuksel",
   "license": "ISC",
+  "engines": {
+    "node": "16.13.x",
+    "npm": "8.4.x"
+  },
   "bugs": {
     "url": "https://github.com/dantan2000/web-dev-archery-app/issues"
   },
