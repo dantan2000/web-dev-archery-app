@@ -26,7 +26,6 @@ export const requestingForSelf = async(req, user) => {
 
 const findAllUsers = async(req, res) => {
   const users = await usersDao.findAllUsers();
-  // console.log("users: " + users)
   // res.json(users.map(user => user.sterilize()));
   // do not sterilize for testing purposes
   res.json(users);

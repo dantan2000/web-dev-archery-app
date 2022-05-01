@@ -6,6 +6,7 @@ import { createScorecard } from "../../../services/scorecard-services";
 import ScorecardTable from '../ScorecardTable';
 import { findUserByCookie } from "../../../services/user-services";
 import { findEventByID } from "../../../services/world-archery-services";
+import BackButton from "../../BackButton";
 
 
 const ScorecardCreate = () => {
@@ -157,6 +158,7 @@ const ScorecardCreate = () => {
 
 
   return <div>
+    <BackButton/>
     <h1>Create Scorecard</h1>
     {isLoading && <div>Loading...</div>}
     {scorecard &&
