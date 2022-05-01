@@ -1,5 +1,28 @@
 {
   "dependencies": {
     "react-bootstrap": "^2.3.1"
-  }
+  },
+  "name": "web-dev-archery-app",
+  "version": "1.0.0",
+  "description": "Archery app",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "heroku-postbuild": "cd backend && npm ci && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dantan2000/web-dev-archery-app.git"
+  },
+  "author": "Dan Tan, Selin Yuksel",
+  "license": "ISC",
+  "engines": {
+    "node": "16.13.x",
+    "npm": "8.4.x"
+  },
+  "bugs": {
+    "url": "https://github.com/dantan2000/web-dev-archery-app/issues"
+  },
+  "homepage": "https://github.com/dantan2000/web-dev-archery-app#readme"
 }
